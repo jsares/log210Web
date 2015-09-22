@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-dla bullshit
+<h3>Créer un nouvel utilisateur</h3>
+ <!--  <form action="/my/link/location" method="get"> -->
+    <input type="submit" value="Créer un nouvel utilisateur" 
+         name="Submit" id="frm1_submit" />
+</form>
 </body>
 </html>
