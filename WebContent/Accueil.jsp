@@ -7,10 +7,11 @@
 <link href="css/signin.css" rel="stylesheet">
 
 <h3>Page d'accueil</h3>
-<form action="Accueil.jsp" method="POST">
+<form>
 	<a href="CreerCompteEtudiant.jsp"> <input type="button"
 		value="Créer un compte étudiant" name="Submit" id="frm_submit" />
-	</a> <br> <br> <input type="button"
+	</a> <br> <br> 
+	<a href="CreerCompteGestionnaire.jsp"> <input type="button"
 		value="Créer un compte gestionnaire" name="Submit" id="frm_submit" />
 </form>
 

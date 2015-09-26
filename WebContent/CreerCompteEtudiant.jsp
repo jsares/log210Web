@@ -1,28 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <jsp:include page="header.jsp"></jsp:include>
-
-<h3>Créer un nouvel utilisateur</h3>
-<form action="/log210Web/test" method=post>
-	<div id="courrielEtudiant">
-		<!-- style="margin:10px 0px 10px 0px;" >-->
-		<input type="text" name="courriel"
-			placeholder="Entrer votre adresse de courriel" class="form-control" required>
-	</div>
-	<div id="mdpEtudiant">
-		<!-- style="margin:10px 0px 10px 0px;"> -->
-		<input type="password" name="mdp" id="inputPassword" class="form-control"
-			placeholder="Password" required>
-	</div>
-	<div id="confirmerMdpEtudiant">
-		<!-- style="margin:10px 0px 10px 0px;"> -->
-		<input type="password" name="confirmerMdp" placeholder="confirmer votre mot de passe" class="form-control" required> 
-		
-	</div>
-	<div id="btnSubmit">
-		<!-- style="margin:10px 0px 10px 0px;" -->
-		 <button type="submit" class="btn btn-default">Submit</button>
-	</div>
-</form>
+<div class="container-fluid">
+	<h3>Créer un compte étudiant</h3>
+	<form action="/log210Web/CreerCompteEtudiant" method=post>
+		<div class="row">
+			<div class="col-md-8" style="margin-bottom: 15px;">
+				<input type="text" name="courriel"
+					placeholder="Entrer votre adresse de courriel"
+					style="width: 250px;" required>
+			</div>
+			<div class="col-md-8" style="margin-bottom: 15px;">
+				<input type="password" name="mdp" placeholder="Entrez un mot de passe"
+					style="width: 250px;" required>
+			</div>
+			<div class="col-md-8" style="margin-bottom: 15px;">
+				<input type="password" name="confirmerMdp" style="width: 250px;"
+					placeholder="confirmer votre mot de passe" required>
+			</div>
+			<div class="col-md-8" style="margin-bottom: 15px;">
+				<input type="submit" value="Créer votre compte">
+			</div>
+		</div>
+	</form>
+</div>
 
 <jsp:include page="footer.jsp"></jsp:include>
