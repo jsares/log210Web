@@ -64,7 +64,7 @@ public class CreerCompteGestionnaire extends HttpServlet {
 					
 					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
 					Statement st= (Statement) con.createStatement(); 
-					int rs=st.executeUpdate("INSERT INTO gestionnaire (prenom, nom, courriel, adresse, mdp) VALUES ('"+this.prenom+"', '"+this.nom+"','"+this.courriel+"','"+this.adresse+"', '"+this.mdp+"')"); 
+					int rs=st.executeUpdate("INSERT INTO gestionnaires (prenom, nom, courriel, adresse, mdp) VALUES ('"+this.prenom+"', '"+this.nom+"','"+this.courriel+"','"+this.adresse+"', '"+this.mdp+"')"); 
 					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

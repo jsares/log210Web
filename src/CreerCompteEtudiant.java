@@ -60,7 +60,7 @@ public class CreerCompteEtudiant extends HttpServlet {
 					
 					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
 					Statement st= (Statement) con.createStatement(); 
-					int rs=st.executeUpdate("INSERT INTO user (courriel, mdp) VALUES ('"+this.courriel+"', '"+this.mdp+"')"); 
+					int rs=st.executeUpdate("INSERT INTO users (courriel, mdp) VALUES ('"+this.courriel+"', '"+this.mdp+"')"); 
 					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
