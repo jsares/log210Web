@@ -1,12 +1,17 @@
 
 
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mysql.jdbc.Statement;
 
 /**
  * Servlet implementation class CreerCompteeEtudiant
@@ -41,10 +46,28 @@ public class CreerCompteEtudiant extends HttpServlet {
 		setCourriel(request.getParameter("courriel"));
 		setMdp(mdp = request.getParameter("mdp"));
 		setConfirmerMdp(request.getParameter("confirmerMdp"));
-		
+
 		if(verifierMdpIdentique()){
-			if(validerChampsVide())
+			if(validerChampsVide()){
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				java.sql.Connection con;
+				try {
+					
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
+					Statement st= (Statement) con.createStatement(); 
+					int rs=st.executeUpdate("INSERT INTO user (courriel, mdp) VALUES ('"+this.courriel+"', '"+this.mdp+"')"); 
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
 				this.getServletContext().getRequestDispatcher("/ConfirmerCreationCompte.jsp").forward(request, response);
+			}
 			else
 				this.getServletContext().getRequestDispatcher("/CreerCompteEtudiant.jsp").forward(request, response);
 		}

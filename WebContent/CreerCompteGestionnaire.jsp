@@ -17,15 +17,15 @@
 					<div class="col-md-8" style="margin-bottom: 15px;">
 						<input type="text" name="courriel"
 							placeholder="Entrer votre adresse de courriel"
-							style="width: 250px;">
+							style="width: 250px;" required>
 					</div>
 					<div class="col-md-8" style="margin-bottom: 15px;">
-						<input type="text" name="mdp" placeholder="Entrez un mot de passe"
-							style="width: 250px;">
+						<input type="password" name="mdp" placeholder="Entrez un mot de passe"
+							style="width: 250px;" required>
 					</div>
 					<div class="col-md-8" style="margin-bottom: 15px;">
-						<input type="text" name="confirmerMdp" style="width: 250px;"
-							placeholder="confirmer votre mot de passe">
+						<input type="password" name="confirmerMdp" style="width: 250px;"
+							placeholder="confirmer votre mot de passe" required>
 					</div>
 			</fieldset>
 			<fieldset>
@@ -33,15 +33,15 @@
 				<div class="row">
 					<div class="col-md-8" style="margin-bottom: 15px;">
 						<input type="text" name="nom" placeholder="Entrer votre nom"
-							style="width: 250px;">
+							style="width: 250px;" required>
 					</div>
 					<div class="col-md-8" style="margin-bottom: 15px;">
 						<input type="text" name="prenom" placeholder="Entrez votre prénom"
-							style="width: 250px;">
+							style="width: 250px;" required>
 					</div>
 					<div class="col-md-8" style="margin-bottom: 15px;">
 						<input type="text" name="adresse" style="width: 250px;"
-							placeholder="Entrez votre adresse">
+							placeholder="Entrez votre adresse" required>
 					</div>
 			</fieldset>
 

@@ -1,12 +1,16 @@
 
 
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mysql.jdbc.Statement;
 
 /**
  * Servlet implementation class CreerCompteGestionnaire
@@ -48,9 +52,26 @@ public class CreerCompteGestionnaire extends HttpServlet {
 		setAdresse(request.getParameter("adresse"));
 		
 		if(verifierMdpIdentique()){
-			if(validerChampsVide())
+			if(validerChampsVide()){
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				java.sql.Connection con;
+				try {
+					
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
+					Statement st= (Statement) con.createStatement(); 
+					int rs=st.executeUpdate("INSERT INTO gestionnaire (prenom, nom, courriel, adresse, mdp) VALUES ('"+this.prenom+"', '"+this.nom+"','"+this.courriel+"','"+this.adresse+"', '"+this.mdp+"')"); 
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
 				this.getServletContext().getRequestDispatcher("/ConfirmerCreationCompte.jsp").forward(request, response);
-			else
+			}else
 				this.getServletContext().getRequestDispatcher("/CreerCompteGestionnaire.jsp").forward(request, response);
 		}
 		else
