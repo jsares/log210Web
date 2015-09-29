@@ -2,28 +2,28 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
 <jsp:include page="header.jsp"></jsp:include>
-<div class="container-fluid">
-	<h3>Créer un compte étudiant</h3>
-	<form action="/log210Web/CreerCompteEtudiant" method=post>
-		<div class="row">
-			<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="text" name="courriel"
-					placeholder="Entrer votre adresse de courriel"
-					style="width: 250px;" required>
-			</div>
-			<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="password" name="mdp" placeholder="Entrez un mot de passe"
-					style="width: 250px;" required>
-			</div>
-			<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="password" name="confirmerMdp" style="width: 250px;"
-					placeholder="confirmer votre mot de passe" required>
-			</div>
-			<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="submit" value="Créer votre compte">
-			</div>
-		</div>
-	</form>
-</div>
+
+<div class="container">
+      <form class="form-signin">
+      	<div class="form-group">
+        	<h3 class="form-signin-heading">Créer un compte étudiant</h3>
+        </div>
+        <div class="form-group">
+	        <label for="email" class="sr-only">Adresse de courriel</label>
+	        <input type="email" id="courriel" class="form-control" placeholder="Entrez votre adresse de courriel" required autofocus>
+	    </div>
+	    <div class="form-group">
+	        <label for="mdp" class="sr-only">Mot de passe</label>
+	        <input type="password" id="mdp" class="form-control" placeholder="Entrez un mot de passe" required>
+	    </div>
+	    <div class="form-group">
+	        <label for="confirmation_mdp" class="sr-only">Confirmation du mot de passe</label>
+	        <input type="password" id="confirmerMdp" class="form-control" style="margin-bottom: 0;" placeholder="Confirmez votre mot de passe" required>
+      	</div>
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Créer votre compte</button>
+      </form>
+
+</div> <!-- /container -->
 
 <jsp:include page="footer.jsp"></jsp:include>

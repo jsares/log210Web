@@ -62,7 +62,7 @@ public class CreerCompteGestionnaire extends HttpServlet {
 				java.sql.Connection con;
 				try {
 					
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","java","admin");
 					Statement st= (Statement) con.createStatement(); 
 					int rs=st.executeUpdate("INSERT INTO gestionnaires (prenom, nom, courriel, adresse, mdp) VALUES ('"+this.prenom+"', '"+this.nom+"','"+this.courriel+"','"+this.adresse+"', '"+this.mdp+"')"); 
 					
