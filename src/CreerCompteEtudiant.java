@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,7 +46,7 @@ public class CreerCompteEtudiant extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setCourriel(request.getParameter("courriel"));
-		setMdp(mdp = request.getParameter("mdp"));
+		setMdp(request.getParameter("mdp"));
 		setConfirmerMdp(request.getParameter("confirmerMdp"));
 
 		if(verifierMdpIdentique()){
@@ -57,22 +59,27 @@ public class CreerCompteEtudiant extends HttpServlet {
 				}
 				java.sql.Connection con;
 				try {
-					
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","java","admin");
+
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
 					Statement st= (Statement) con.createStatement(); 
-					int rs=st.executeUpdate("INSERT INTO etudiants (email, password) VALUES ('"+this.courriel+"', '"+this.mdp+"')"); 
-					
+					int rs=st.executeUpdate("INSERT INTO etudiants (courriel, mdp) VALUES ('"+this.courriel+"', '"+this.mdp+"')"); 
+
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
 				this.getServletContext().getRequestDispatcher("/ConfirmerCreationCompte.jsp").forward(request, response);
 			}
-			else
+			else{
 				this.getServletContext().getRequestDispatcher("/CreerCompteEtudiant.jsp").forward(request, response);
+			}
 		}
-		else
+		else{
+			Map<String, String> messages = new HashMap<String, String>();
+			request.setAttribute("messages", messages); // Now it's available by ${messages}
+			messages.put("test", "erreur dans le mot de passe");
 			this.getServletContext().getRequestDispatcher("/CreerCompteEtudiant.jsp").forward(request, response);
+		}
 	}
 
 

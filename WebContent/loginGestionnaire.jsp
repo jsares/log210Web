@@ -1,25 +1,26 @@
-<%@ page import ="java.sql.*" %>
-<%@ page import ="javax.sql.*" %>
-<%
-String userid=request.getParameter("usr"); 
-session.putValue("userid",userid); 
-String pwd=request.getParameter("pwd"); 
-Class.forName("com.mysql.jdbc.Driver"); 
-java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test2","root","toor"); 
-Statement st= con.createStatement(); 
-ResultSet rs=st.executeQuery("select * from gestionnaires where email='"+userid+"'"); 
-if(rs.next()) 
-{ 
-if(rs.getString(2).equals(pwd)) 
-{ 
-out.println("welcome"+userid); 
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/signin.css" rel="stylesheet">
+<jsp:include page="header.jsp"></jsp:include>
 
-} 
-else 
-{ 
-out.println("Invalid password try again  "); 			
-} 
-} 
-else{
-}
-%>
+<div class="container">
+      <form class="form-signin" action="/log210Web/LoginGestionnaire" method=post>
+      	<div class="form-group">
+        	<h3 class="form-signin-heading">Se connecter en tant que gestionnaire</h3>
+        </div>
+        <div class="form-group">
+	        <label for="email" class="sr-only">Adresse de courriel</label>
+	        <input type="email" id="courriel" name="courriel" class="form-control" placeholder="Entrez votre adresse de courriel" required autofocus>
+        </div>
+        <div class="form-group">
+        	<label for="mdp" class="sr-only">Mot de passe</label>
+	        <input type="password" id="mdp" name="mdp" class="form-control" placeholder="mot de passe" required>
+        </div>
+        <span class="error">${messages.erreurLogin}</span>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+      </form>
+
+</div> <!-- /container -->
+
+<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="header.jsp"></jsp:include>
