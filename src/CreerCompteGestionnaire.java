@@ -62,9 +62,9 @@ public class CreerCompteGestionnaire extends HttpServlet {
 				java.sql.Connection con;
 				try {
 					
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
+					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","admin");
 					Statement st= (Statement) con.createStatement(); 
-					int rs=st.executeUpdate("INSERT INTO gestionnaires (prenom, nom, courriel, adresse, mdp) VALUES ('"+this.prenom+"', '"+this.nom+"','"+this.courriel+"','"+this.adresse+"', '"+this.mdp+"')"); 
+					int rs=st.executeUpdate("INSERT INTO gestionnaires (email, password, nom, adresse) VALUES ('"+this.courriel+"','"+this.mdp+"','"+this.nom+"', '"+this.adresse+"')"); 
 					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -75,8 +75,9 @@ public class CreerCompteGestionnaire extends HttpServlet {
 				this.getServletContext().getRequestDispatcher("/CreerCompteGestionnaire.jsp").forward(request, response);
 		}
 		else
+		{
 			this.getServletContext().getRequestDispatcher("/CreerCompteGestionnaire.jsp").forward(request, response);
-	}
+		}}
 
 	private boolean validerChampsVide() {
 		if(courriel.length() < 1 || mdp.length() < 1 || confirmerMdp.length() < 1
