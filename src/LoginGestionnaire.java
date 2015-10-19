@@ -56,10 +56,10 @@ public class LoginGestionnaire extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection con;
 			ResultSet rs;
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
 			Map<String, String> messages = new HashMap<String, String>();
 			Statement st= (Statement) con.createStatement(); 
-			rs = st.executeQuery("select mdp from gestionnaires where courriel = '" + courriel + "'");
+			rs = st.executeQuery("select mdpassword from gestionnaires where mail = '" + courriel + "'");
 			
 			if (rs.next()) { //connection reussi
 				if (rs.getString("mdp").equals(mdp)) {

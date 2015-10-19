@@ -57,13 +57,13 @@ public class LoginEtudiant extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection con;
 			ResultSet rs;
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/livre","admin","admin");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairielog210","root","toor");
 			Map<String, String> messages = new HashMap<String, String>();
 			Statement st= (Statement) con.createStatement(); 
-			rs = st.executeQuery("select mdp from etudiants where courriel = '" + courriel + "'");
+			rs = st.executeQuery("select password from etudiants where email = '" + courriel + "'");
 			
 			if (rs.next()) { //connection reussi
-				if (rs.getString("mdp").equals(mdp)) {
+				if (rs.getString("password").equals(mdp)) {
 					session.setAttribute("utilisateur", courriel);
 					rd = request.getRequestDispatcher("Accueil.jsp");
 				}
