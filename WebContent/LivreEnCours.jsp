@@ -46,7 +46,7 @@
 			
 
 			<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="submit" name="Reserver" value="Réserver ce livre">
+				<input type="submit" name="Payer" value="Payer les livres">
 			</div>
 			<div class="col-md-8" style="margin-bottom: 15px;">
 				<input type="submit" name="Retour" value="Chercher un autre livre">

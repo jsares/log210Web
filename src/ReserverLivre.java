@@ -68,7 +68,9 @@ public class ReserverLivre extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			request.getRequestDispatcher("/ChercherLivre.jsp").forward(request, response);
+			
+		
+			request.getRequestDispatcher("/LivreReserves.jsp").forward(request, response);
         } 
 		
 		else if(request.getParameter("Retour") != null){
