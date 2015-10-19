@@ -12,6 +12,12 @@
 	</c:if>
 </form>
 
+	<c:if test="${sessionScope.utilisateur != null}">
+		<a href="ChercherLivre.jsp"> <input type="button"
+			value="Chercher un livre" name="Submit" id="frm_submit" />
+			
+	</c:if>
+
 <h3>Page d'accueil</h3>
 <form>
 	<c:if test="${sessionScope.utilisateur == null}">
