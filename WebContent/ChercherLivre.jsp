@@ -11,7 +11,7 @@
 <body>
 	<h3>Chercher un livre</h3>
 	<div class="container-fluid">
-		<form action="/log210Web/ChercherLivre" method=post>
+		<form class="form-signin" action="/log210Web/ChercherLivre" method=post>
 		
 			<fieldset>
 				<h3>Chercher un livre à partir de son code</h3>
@@ -56,8 +56,10 @@
 				</div>
 			</fieldset>
 			
-	
+		</form>
 	</div>
+	
+	
 
 	
 </body>

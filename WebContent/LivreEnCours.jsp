@@ -12,7 +12,7 @@
 <body>
 	<h3>Votre livre</h3>
 	<div class="container-fluid">
-		<form action="/log210Web/ReserverLivre" method=post>
+		<form class="form-signin" action="/log210Web/ReserverLivre" method=post>
 			<fieldset>
 				<legend>Livre en Cours</legend>
 			<fieldset>
