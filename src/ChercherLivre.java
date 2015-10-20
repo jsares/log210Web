@@ -16,7 +16,7 @@ import com.mysql.jdbc.Statement;
 /**
  * Servlet implementation class CreerCompteeEtudiant
  */
-@WebServlet(name = "ChercherLivre", urlPatterns = { "/ChercherLivre" })
+@WebServlet("/ChercherLivre" )
 public class ChercherLivre extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String entree = "";

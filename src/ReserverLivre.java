@@ -10,17 +10,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Statement;
 
 /**
  * Servlet implementation class CreerCompteeEtudiant
  */
-@WebServlet(name = "ReserverLivre", urlPatterns = { "/ReserverLivre" })
+@WebServlet("/ReserverLivre")
 public class ReserverLivre extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String id ="";
 	private String prix = "";
+	private String titre = "";
+	private String auteur = "";
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -43,8 +46,9 @@ public class ReserverLivre extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		
-		
+				
 		
 		if (request.getParameter("Reserver") != null) {
             id = (String) (request.getSession().getAttribute("id"));
@@ -62,7 +66,7 @@ public class ReserverLivre extends HttpServlet {
 				
 				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
 				Statement st= (Statement) con.createStatement(); 
-				int rs=st.executeUpdate("INSERT INTO reservation (etudiant, id, prix) VALUES ('6', '"+(this.id)+"', '"+(this.prix)+"')"); 
+				int rs=st.executeUpdate("INSERT INTO reservation (etudiant, id, prix, payed) VALUES ('"+(session.getAttribute("utilisateur"))+"', '"+(this.id)+"', '"+(this.prix)+"','"+(0)+"')"); 
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

@@ -7,8 +7,8 @@
 	<c:if test="${sessionScope.utilisateur != null}">
 		<label> Vous êtes connecté en tant que <%=session.getAttribute("utilisateur")%>
 		</label>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Se
-			déconnecter</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit"><h4>Se
+			déconnecter</h4></button>
 	</c:if>
 </form>
 
