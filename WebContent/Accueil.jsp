@@ -16,6 +16,10 @@
 		<a href="ChercherLivre.jsp"> <input type="button"
 			value="Chercher un livre" name="Submit" id="frm_submit" />
 			
+			<a href="LivreReserves.jsp"> <input type="button"
+			value="Voir livres reservés" name="Submit" id="frm_submit" />
+			
+			
 	</c:if>
 
 <h3>Page d'accueil</h3>

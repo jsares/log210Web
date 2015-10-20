@@ -57,6 +57,17 @@
 			</fieldset>
 			
 		</form>
+		
+		
+	</div>
+	
+	<div>
+	<form class="form-signin" action="/log210Web/Logout" method=post>
+	<c:if test="${sessionScope.utilisateur != null}">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Se
+			déconnecter</button>
+	</c:if>
+</form>
 	</div>
 	
 	

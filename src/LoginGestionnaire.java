@@ -25,6 +25,8 @@ public class LoginGestionnaire extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String courriel = "";
 	private String mdp = "";
+	private String telephone = "";
+	
        
 	/**
      * @see HttpServlet#HttpServlet()
@@ -49,9 +51,10 @@ public class LoginGestionnaire extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("Accueil.jsp");
 
 		setCourriel(request.getParameter("courriel"));
-		setMdp(request.getParameter("mdp"));
+		setMdp(mdp =request.getParameter("mdp"));
+		setTelephone(request.getParameter("telephone"));
 
-		
+		if (request.getParameter("bmail") != null){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection con;
@@ -59,10 +62,10 @@ public class LoginGestionnaire extends HttpServlet {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
 			Map<String, String> messages = new HashMap<String, String>();
 			Statement st= (Statement) con.createStatement(); 
-			rs = st.executeQuery("select mdpassword from gestionnaires where mail = '" + courriel + "'");
+			rs = st.executeQuery("select password from gestionnaire where email = '" + courriel + "'");
 			
 			if (rs.next()) { //connection reussi
-				if (rs.getString("mdp").equals(mdp)) {
+				if (rs.getString("password").equals(mdp)) {
 					session.setAttribute("utilisateur", courriel);
 					rd = request.getRequestDispatcher("Accueil.jsp");
 				}
@@ -83,6 +86,44 @@ public class LoginGestionnaire extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		}
+		
+		if (request.getParameter("btel") != null){
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				java.sql.Connection con;
+				ResultSet rs;
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
+				Map<String, String> messages = new HashMap<String, String>();
+				Statement st= (Statement) con.createStatement(); 
+				rs = st.executeQuery("select * from gestionnaire where telephone = '" + telephone + "'");
+				
+				
+				
+				if (rs.next()) { //connection reussi
+					if (rs.getString("password").equals(mdp)) {
+						setCourriel(rs.getString("email"));						
+						session.setAttribute("utilisateur", courriel);
+						rd = request.getRequestDispatcher("Accueil.jsp");
+					}
+					else { //mdp ou courriel ne correspondent pas
+						request.setAttribute("messages", messages); // Now it's available by ${messages}
+						messages.put("erreurLogin", "Le telephone ou le mot de passe ne correspond pas");         
+						rd = request.getRequestDispatcher("loginGestionnaire.jsp");
+					}
+				}
+				else { //mdp ou courriel ne correspondent pas
+					request.setAttribute("messages", messages); // Now it's available by ${messages}
+					messages.put("erreurLogin", "Nous éprouvons actuellement des difficultés");         
+					rd = request.getRequestDispatcher("loginGestionnaire.jsp");
+				}
+
+				rd.forward(request, response);
+			} catch (SQLException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			}
 
 	}
 	
@@ -93,6 +134,14 @@ public class LoginGestionnaire extends HttpServlet {
 		public void setCourriel(String courriel) {
 			this.courriel = courriel;
 		}
+		public String getTelephone() {
+			return telephone;
+		}
+
+		public void setTelephone(String telephone) {
+			this.telephone = telephone;
+		}
+
 
 		public String getMdp() {
 			return mdp;

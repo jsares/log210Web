@@ -10,14 +10,19 @@
         </div>
         <div class="form-group">
 	        <label for="email" class="sr-only">Adresse de courriel</label>
-	        <input type="email" id="courriel" name="courriel" class="form-control" placeholder="Entrez votre adresse de courriel" required autofocus>
+	        <input type="email" id="courriel" name="courriel" class="form-control" placeholder="Entrez votre adresse de courriel"  autofocus>
+        </div>
+        <div class="form-group">
+	        <label for="email" class="sr-only">Num de telephone</label>
+	        <input  id="telephone" name="telephone" class="form-control" placeholder="Entrez votre num de telephone"  autofocus>
         </div>
         <div class="form-group">
         	<label for="mdp" class="sr-only">Mot de passe</label>
 	        <input type="password" id="mdp" name="mdp" class="form-control" placeholder="mot de passe" required>
         </div>
         <span class="error">${messages.erreurLogin}</span>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+        <button class="btn btn-lg btn-primary btn-block" name="bmail" type="submit">Se connecter via email</button>
+         <button class="btn btn-lg btn-primary btn-block" name="btel"  type="submit">Se connecter via telephone</button>
       </form>
 
 </div> <!-- /container -->

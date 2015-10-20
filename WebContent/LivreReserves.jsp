@@ -103,8 +103,7 @@
 								rqs=st1.executeQuery("Select * from livres where id='"+id+"'"); 
 								if(rqs.next()){
 									
-									out.println(rqs.getString(4)+" de ");
-									out.println(rqs.getString(5) + " à ");
+									out.println(rqs.getString(4)+" ");
 								}
 							
 							
@@ -146,6 +145,16 @@
 			</div>
 		</form>
 	</div>
+	
+	<div>
+	<form class="form-signin" action="/log210Web/Logout" method=post>
+	<c:if test="${sessionScope.utilisateur != null}">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Se
+			déconnecter</button>
+	</c:if>
+</form>
+	</div>
+	
 
 </body>
 </html>

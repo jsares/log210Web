@@ -24,6 +24,7 @@ public class CreerCompteGestionnaire extends HttpServlet {
 	private String nom = "";
 	private String prenom = "";
 	private String adresse = "";
+	private String telephone = "";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -45,11 +46,12 @@ public class CreerCompteGestionnaire extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setCourriel(request.getParameter("courriel"));
-		setMdp(mdp = request.getParameter("mdp"));
+		setMdp(request.getParameter("mdp"));
 		setConfirmerMdp(request.getParameter("confirmerMdp"));
 		setNom(request.getParameter("nom"));
 		setPrenom(request.getParameter("prenom"));
 		setAdresse(request.getParameter("adresse"));
+		setTelephone(request.getParameter("telephone"));
 		
 		if(verifierMdpIdentique()){
 			if(validerChampsVide()){
@@ -64,7 +66,7 @@ public class CreerCompteGestionnaire extends HttpServlet {
 					
 					con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
 					Statement st= (Statement) con.createStatement(); 
-					int rs=st.executeUpdate("INSERT INTO gestionnaires (email, password, nom, adresse) VALUES ('"+this.courriel+"','"+this.mdp+"','"+this.nom+"', '"+this.adresse+"')"); 
+					int rs=st.executeUpdate("INSERT INTO gestionnaire (email, password, nom, prenom, adresse, telephone) VALUES ('"+this.courriel+"','"+this.mdp+"','"+this.nom+"','"+this.prenom+"','"+this.adresse+"', '"+this.telephone+"')"); 
 					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -104,6 +106,14 @@ public class CreerCompteGestionnaire extends HttpServlet {
 
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
+	}
+	
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getConfirmerMdp() {
