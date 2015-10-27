@@ -7,12 +7,14 @@
 <h3>Votre transaction est confirmé</h3>
 
 
-<form class="form-signin" action="/log210Web/Logout" method=post>
-	
-		<button class="btn btn-lg btn-primary btn-block" type="submit"><h4>Se
-			déconnecter</h4></button>
-	
-</form>
+	<div>
+		<form class="form-signin" action="/log210Web/Logout" method=post>
+			<c:if test="${sessionScope.loginGestionnaire != null || sessionScope.loginEtudiant != null}">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Se
+					déconnecter</button>
+			</c:if>
+		</form>
+	</div>
 
 
 

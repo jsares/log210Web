@@ -14,13 +14,13 @@
 <a href="Accueil.jsp"> <input type="button" value="Retourner à la page d'accueil" name="Submit"/>
 
 
-<div>
-	<form class="form-signin" action="/log210Web/Logout" method=post>
-	<c:if test="${sessionScope.utilisateur != null}">
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Se
-			déconnecter</button>
-	</c:if>
-</form>
+	<div>
+		<form class="form-signin" action="/log210Web/Logout" method=post>
+			<c:if test="${sessionScope.loginGestionnaire != null || sessionScope.loginEtudiant != null}">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Se
+					déconnecter</button>
+			</c:if>
+		</form>
 	</div>
 	
 

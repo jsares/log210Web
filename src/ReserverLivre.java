@@ -64,7 +64,7 @@ public class ReserverLivre extends HttpServlet {
             java.sql.Connection con;
 			try {
 				
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3307/LibrairieLog210","admin","admin");
 				Statement st= (Statement) con.createStatement(); 
 				int rs=st.executeUpdate("INSERT INTO reservation (etudiant, id, prix, payed) VALUES ('"+(session.getAttribute("utilisateur"))+"', '"+(this.id)+"', '"+(this.prix)+"','"+(0)+"')"); 
 				

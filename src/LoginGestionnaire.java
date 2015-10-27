@@ -59,14 +59,14 @@ public class LoginGestionnaire extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection con;
 			ResultSet rs;
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
 			Map<String, String> messages = new HashMap<String, String>();
 			Statement st= (Statement) con.createStatement(); 
 			rs = st.executeQuery("select password from gestionnaire where email = '" + courriel + "'");
 			
 			if (rs.next()) { //connection reussi
 				if (rs.getString("password").equals(mdp)) {
-					session.setAttribute("utilisateur", courriel);
+					session.setAttribute("loginGestionnaire", courriel);
 					rd = request.getRequestDispatcher("Accueil.jsp");
 				}
 				else { //mdp ou courriel ne correspondent pas
@@ -93,7 +93,7 @@ public class LoginGestionnaire extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				java.sql.Connection con;
 				ResultSet rs;
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
 				Map<String, String> messages = new HashMap<String, String>();
 				Statement st= (Statement) con.createStatement(); 
 				rs = st.executeQuery("select * from gestionnaire where telephone = '" + telephone + "'");
@@ -103,7 +103,7 @@ public class LoginGestionnaire extends HttpServlet {
 				if (rs.next()) { //connection reussi
 					if (rs.getString("password").equals(mdp)) {
 						setCourriel(rs.getString("email"));						
-						session.setAttribute("utilisateur", courriel);
+						session.setAttribute("loginGestionnaire", courriel);
 						rd = request.getRequestDispatcher("Accueil.jsp");
 					}
 					else { //mdp ou courriel ne correspondent pas
