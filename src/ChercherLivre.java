@@ -49,7 +49,7 @@ public class ChercherLivre extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+
 		
 		if (request.getParameter("ISBN_Button") != null) {
             typeEntree = "ISBN";
@@ -103,7 +103,12 @@ public class ChercherLivre extends HttpServlet {
 			request.setAttribute("auteur", auteur);
 			request.setAttribute("prix", prix);
 			request.setAttribute("id", id);
-			request.getRequestDispatcher("/LivreEnCours.jsp").forward(request, response);
+			if(request.getSession().getAttribute("action") == "ajouterLivreRecherche"){
+				request.getSession().removeAttribute("action");
+				request.getRequestDispatcher("/AjoutLivreEnCours.jsp").forward(request, response);
+			}
+			else
+				request.getRequestDispatcher("/LivreEnCours.jsp").forward(request, response);
 		}
 		
 	
