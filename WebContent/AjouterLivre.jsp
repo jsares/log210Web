@@ -26,7 +26,7 @@
 				<fieldset>
 					<div class="row">
 						<div class="col-md-8" style="margin-bottom: 15px;">
-							<input type="text" name="isbn"
+							<input type="text" name="code"
 								placeholder="Code ISBN du livre"
 								style="width: 250px;">
 						</div>

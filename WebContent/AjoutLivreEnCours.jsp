@@ -38,15 +38,19 @@
 	    	</div>
 			</fieldset>		
 			<fieldset>
-			<h4>Prix</h4>
+			<h4>Prix($)</h4>
 			<div class="form-group">
-	        	<input type="prix" id="prix" name="prix" class="form-control" value="<%= request.getAttribute("prix")%>$" required autofocus>
+	        	<input type="prix" id="prix" name="prix" class="form-control" value="<%= request.getAttribute("prix")%>" required autofocus>
 	    	</div>	
 			</fieldset>		
 			<fieldset>
 			<h4>État</h4>
 			<div class="form-group">
-	        	<input type="etat" id="etat" name="etat" class="form-control" placeholder="indiquez l'état du livre" required autofocus>
+				<select name="etat">
+					<option value="Bon">Bon</option>
+					<option value="Passable">Passable</option>
+					<option value="Critique">Critique</option>
+				</select>
 	    	</div>	
 			</fieldset>	
 			</fieldset>

@@ -1,12 +1,16 @@
 
 
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mysql.jdbc.Statement;
 
 /**
  * Servlet implementation class AjouterLivre
@@ -46,7 +50,44 @@ public class AjouterLivre extends HttpServlet {
 		prix = request.getParameter("prix");
 		id = request.getParameter("id");
 		etat = request.getParameter("etat");
-		System.out.println(information + " " + auteur + " " + titre + " " + prix + " " + id + " " + etat );
+		
+		if(ajouterLivre(information, auteur, titre, prix, etat)){
+			preparerInfo(request);
+			request.getRequestDispatcher("/LivreEnCours.jsp").forward(request, response);
+		}
+		
+
+	}
+
+	private void preparerInfo(HttpServletRequest request) {
+		request.setAttribute("information", information);
+		request.setAttribute("auteur", auteur);
+		request.setAttribute("titre", titre);
+		request.setAttribute("etat", etat);
+		request.setAttribute("prix", prix);
+	}
+
+	private boolean ajouterLivre(String information, String auteur, String titre, String prix, String etat) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		java.sql.Connection con;
+		try {
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairielog210","admin","admin");
+			Statement st= (Statement) con.createStatement(); 
+			int rs=st.executeUpdate("INSERT INTO livres (id,ISBN,UPC, titre, auteur, information, prix) VALUES (77,0, 0, '"+titre+"','"+auteur+"','"+information+"','"+prix+"' )"); 
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return false;
+		
 	}
 
 }

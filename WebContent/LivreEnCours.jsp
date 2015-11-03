@@ -37,23 +37,36 @@
 			%>	
 			</fieldset>		
 			<fieldset>
-			<h4>Prix</h4>
+			<h4>Prix ($)</h4>
 			<%
-			out.println(request.getAttribute("prix")+"$" ); 
+			out.println(request.getAttribute("prix")); 
 			%>	
 			</fieldset>		
-			</fieldset>
-			
 
-			<div class="col-md-8" style="margin-bottom: 15px;">
+			<fieldset>
+			<h4>État</h4>
+				<select name="etat" disabled="disabled">
+					<option value=etat><%=request.getAttribute("etat")%></option>
+
+				</select>	
+			</fieldset>	
+			
+			</fieldset>
+
+			<div class="col-md-8" style="margin-bottom: 15px; margin-top: 15px;">
+				<a href="AjouterLivre.jsp"> <input type="button" value="Ajouter un livre" />
+				</a>
+			</div>
+
+			<div class="col-md-8" style="margin-bottom: 15px; margin-top: 15px;">
 				<input type="submit" name="Reserver" value="Reserver le livre">
 			</div>
 			<div class="col-md-8" style="margin-bottom: 15px;">
 				<input type="submit" name="Retour" value="Chercher un autre livre">
 			</div>
-	</div>
 
 	</form>
+	</div>
 	</div>
 	
 	<div>
