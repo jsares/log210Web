@@ -41,6 +41,7 @@ public class ChercherLivre extends HttpServlet {
 	private String prix = "";
 	private String id = "";
 	private String etat = "";
+	private String accesKey = "RI48ATRC";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -101,18 +102,15 @@ public class ChercherLivre extends HttpServlet {
 			}
 
 			if(rs.next()){
-				information = (rs.getString(6) ); 
-				auteur = (rs.getString(5) ); 
-				titre = (rs.getString(4) ); 
-				prix = (rs.getString(7) ); 
-				id = (rs.getString(1) ); 
-				etat = (rs.getString(8));
+				chercheLivredb(rs);
 			}
 
 			if(auteur == "" || titre == "")
 				chercherLivreISBNDB(request);
 			else
 				preparerInfo(request);
+			
+			checkIfNull(request);
 
 			if(request.getSession().getAttribute("action") == "ajouterLivreRecherche"){
 				request.getSession().removeAttribute("action");
@@ -124,6 +122,27 @@ public class ChercherLivre extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void checkIfNull(HttpServletRequest request) {
+		if(request.getAttribute("information") == null)
+			request.setAttribute("information", "");
+		if(request.getAttribute("auteur") == null)
+			request.setAttribute("auteur", "");
+		if(request.getAttribute("titre") == null)
+			request.setAttribute("titre", "");
+		if(request.getAttribute("prix") == null)
+			request.setAttribute("prix", "0");
+		
+	}
+
+	private void chercheLivredb(ResultSet rs) throws SQLException {
+		information = (rs.getString(6) ); 
+		auteur = (rs.getString(5) ); 
+		titre = (rs.getString(4) ); 
+		prix = (rs.getString(7) ); 
+		id = (rs.getString(1) ); 
+		etat = (rs.getString(8));
 	}
 
 	private void preparerInfo(HttpServletRequest request) {
@@ -142,9 +161,9 @@ public class ChercherLivre extends HttpServlet {
 	private void chercherLivreISBNDB(HttpServletRequest request){
 		URL url;
 		try {
-			String titre;
-			String auteur;
-			url = new URL("http://isbndb.com/api/books.xml?access_key=RI48ATRC&index1=isbn&value1="+entree);
+			String titre = "";
+			String auteur = "";
+			url = new URL("http://isbndb.com/api/books.xml?access_key="+accesKey+"&index1=isbn&value1="+entree);
 
 			URLConnection urlConnection = url.openConnection();
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -156,36 +175,36 @@ public class ChercherLivre extends HttpServlet {
 
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
 			NodeList nList = doc.getElementsByTagName("BookData");
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 
 				Node nNode = nList.item(temp);
 
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
 					Element eElement = (Element) nNode;
 
 					titre = eElement.getElementsByTagName("Title").item(0).getTextContent();
 					auteur = eElement.getElementsByTagName("AuthorsText").item(0).getTextContent();
-
-					request.setAttribute("titre", titre);
-					request.setAttribute("auteur", auteur);
-					request.setAttribute("information", "");
-					request.setAttribute("prix", "");
 				}
 
 			}
+			
+			request.setAttribute("titre", titre);
+			request.setAttribute("auteur", auteur);
+			request.setAttribute("information", "");
+			request.setAttribute("prix", "");
+			
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// Source: http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
+		// Source: http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/ 
+		//**********************************
+		//**************************************
+		//*************************************
+		//**************************************
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

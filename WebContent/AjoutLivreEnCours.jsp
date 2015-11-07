@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Bootstrap -->
 <%@ page import ="java.sql.*" %>
 <%@ page import ="javax.sql.*" %>
@@ -18,7 +19,7 @@
 			<fieldset>
 			<h4>Titre</h4>
 			<div class="form-group">
-	        	<input type="titre" id="titre" name="titre" class="form-control" value="<%= request.getAttribute("titre")%>" required autofocus>
+			 		<input type="text" id="titre" name="titre" class="form-control" value="<%= request.getAttribute("titre")%>" required autofocus>
 	    	</div>
 	    	<%
 			session.setAttribute("id", request.getAttribute("id"));
@@ -28,25 +29,30 @@
 			<fieldset>
 			<h4>Auteur</h4>
 			<div class="form-group">
-	        	<input type="auteur" id="auteur" name="auteur" class="form-control" value="<%= request.getAttribute("auteur")%>" required autofocus>
+	        		
+	        		<input type="text" id="auteur" name="auteur" class="form-control" value="<%= request.getAttribute("auteur")%>" placeholder="Entrer un auteur" required autofocus>
+	
 	    	</div>
 			</fieldset>
 			<fieldset>
 			<h4>Information</h4>
 			<div class="form-group">
-	        	<input type="information" id="information" name="information" class="form-control" value="<%= request.getAttribute("information")%>" required autofocus>
+	        		<input type="text" id="information" name="information" class="form-control" value="<%= request.getAttribute("information")%>" placeholder="" required autofocus>
 	    	</div>
 			</fieldset>		
 			<fieldset>
 			<h4>Prix($)</h4>
 			<div class="form-group">
-	        	<input type="prix" id="prix" name="prix" class="form-control" value="<%= request.getAttribute("prix")%>" required autofocus>
+				
+	        		<input type="text" id="prix" name="prix" class="form-control" value="<%= request.getAttribute("prix")%>" required autofocus>
+					<input type="hidden" name="prixStatic" id="prixStatic" value="<%= request.getAttribute("prix")%>">
+				
 	    	</div>	
 			</fieldset>		
 			<fieldset>
 			<h4>État</h4>
 			<div class="form-group">
-				<select name="etat">
+				<select name="etat" id="etat" onchange="calculerPrix()">
 					<option value="Bon">Bon</option>
 					<option value="Passable">Passable</option>
 					<option value="Critique">Critique</option>
@@ -75,4 +81,24 @@
 	</div>
 	
 </body>
+
+<script type="text/javascript">
+function calculerPrix(){
+	var elem = document.getElementById("prix");
+	var pr = document.getElementById("prixStatic");
+	if(pr.value != "" || pr.value != null)
+		elem.value = pr.value;
+	
+    var selection = document.getElementById("etat").value;
+    
+    if(elem.value != "" || elem.value != null || pr.value != "" || pr.value != null){
+		if(selection == "Bon")
+			elem.value *= 0.25;
+		if(selection == "Passable")
+			elem.value *= 0.50;
+		if(selection == "Critique")
+			elem.value *= 0.75;
+	}
+}
+</script>
 </html>
