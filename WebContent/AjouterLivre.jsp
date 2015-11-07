@@ -32,7 +32,9 @@
 						</div>
 					<div class="col-md-8" style="margin-bottom: 15px;">
 					<%session.setAttribute("action", "ajouterLivreRecherche");%>
-					<input type="submit" name="ISBN_Button" value="Rechercher" >
+					<input type="submit" name="ISBN_Button" value="Code ISBN" >			
+					<input type="submit" name="UPC_Button" value="Code UPC" >
+				</div>
 					</div>
 				</fieldset>
 			</form>

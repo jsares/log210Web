@@ -53,7 +53,7 @@
 			
 			</fieldset>
 
-			<div class="col-md-8" style="margin-bottom: 15px; margin-top: 15px;">
+			<div class="col-md-8" style="margin-top: 15px;">
 				<a href="AjouterLivre.jsp"> <input type="button" value="Ajouter un livre" />
 				</a>
 			</div>

@@ -79,7 +79,7 @@ public class AjouterLivre extends HttpServlet {
 
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairielog210","admin","admin");
 			Statement st= (Statement) con.createStatement(); 
-			int rs=st.executeUpdate("INSERT INTO livres (id,ISBN,UPC, titre, auteur, information, prix) VALUES (77,0, 0, '"+titre+"','"+auteur+"','"+information+"','"+prix+"' )"); 
+			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, information, prix, etat) VALUES (0, 0, '"+titre+"','"+auteur+"','"+information+"','"+prix+"','"+etat+"')"); 
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
