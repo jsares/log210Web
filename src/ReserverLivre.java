@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +25,8 @@ public class ReserverLivre extends HttpServlet {
 	private String prix = "";
 	private String titre = "";
 	private String auteur = "";
+	private ArrayList<String> myListPaye = null;
+	private ArrayList<String[]> myListReserve = null;
 	
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -72,7 +75,89 @@ public class ReserverLivre extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
+			/////ListeReserve
+			try {
+				
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
+				Statement st= (Statement) con.createStatement(); 
+				int prixInt = 0;
+				ResultSet rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
 			
+				myListReserve = new ArrayList<String[]>();  
+				
+				while(rs.next()){
+					
+		        	if(Integer.parseInt(rs.getString(1))==0){
+						String id= (rs.getString(2) ); 
+						
+						try {
+							Statement st1= (Statement) con.createStatement(); 
+							ResultSet rqs;
+							rqs=st1.executeQuery("Select * from livres where id='"+id+"'"); 
+							
+							if(rqs.next()){
+								myListReserve.add(new String[] {rqs.getString(4), rqs.getString(5), rqs.getString(7)});
+							}
+							
+							prixInt = prixInt + Integer.parseInt(rqs.getString(7));
+						
+						
+						}
+						catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+					
+		        	
+		        
+		        	}}
+				prix = (""+prixInt+"");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			/////ListPayé
+			try {
+				
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
+				Statement st= (Statement) con.createStatement(); 
+				ResultSet rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
+			
+				myListPaye = new ArrayList<String>();  
+				
+				while(rs.next()){
+					
+		        	if(Integer.parseInt(rs.getString(1))==1){
+						String id= (rs.getString(2) ); 
+						
+						try {
+							Statement st1= (Statement) con.createStatement(); 
+							ResultSet rqs;
+							rqs=st1.executeQuery("Select * from livres where id='"+id+"'"); 
+							
+							if(rqs.next()){
+								myListPaye.add(rqs.getString(4));
+							}
+							
+						
+						
+						}
+						catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
+					
+		        	
+		        
+		        	}}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		
+			request.setAttribute("myListReserve", myListReserve);
+			request.setAttribute("myListPaye", myListPaye);
+			request.setAttribute("prix", prix);
 		
 			request.getRequestDispatcher("/LivreReserves.jsp").forward(request, response);
         } 

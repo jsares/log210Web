@@ -1,10 +1,8 @@
 <!-- Bootstrap -->
-<%@ page import ="java.sql.*" %>
-<%@ page import ="javax.sql.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
 <jsp:include page="header.jsp"></jsp:include>
-
 
 
 <title>Livres reservés</title>
@@ -16,64 +14,16 @@
 			<fieldset>
 			<h3>Réservés</h3>
 			<h4>
-			<%
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
-				Statement st= (Statement) con.createStatement(); 
-				ResultSet rs;
-				int prix = 0;
-				
-				rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
-				
-				while(rs.next()){
-					
-			        	if(Integer.parseInt(rs.getString(1))==0){
-							String id= (rs.getString(2) ); 
-							
-							try {
-								Statement st1= (Statement) con.createStatement(); 
-								ResultSet rqs;
-								rqs=st1.executeQuery("Select * from livres where id='"+id+"'"); 
-								if(rqs.next()){
-									out.println(rqs.getString(4)+" de ");
-									out.println(rqs.getString(5) + " à ");
-									out.println(rqs.getString(7)+ "$");
-									out.println("/n");
-								}
-								
-								prix = prix + Integer.parseInt(rqs.getString(7));
-							
-							
-							}
-							catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} 
-						
-			        	
-			        }
-					
-			        	
-			        	
-			        
-					
-					}
-				out.println("Il vous reste "+prix+"$ à payer");
-					
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
 			
+			<c:forEach items="${myListReserve}" var="livreP">  
 			
+ 			 
+ 			<br> Titre : ${livreP[0]} <br /> 
+ 			<br> Auteur : ${livreP[1]}  <br /> 
+ 			<br> Prix : ${livreP[2]} <br /> <br>  <br />  
+			</c:forEach>  		
 			
-			
-			
-			
-			%>	
+			<br> Prix Total : ${prix}  <br /> 
 			
 			</h4>
 			
@@ -82,54 +32,11 @@
 			<fieldset>
 			<h3>Payés</h3>
 			<h4>
-			<%
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
-				Statement st= (Statement) con.createStatement(); 
-				ResultSet rs;
-				int prix = 0;
-				
-				rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
-				
-				while(rs.next()){
-					
-			        	if(Integer.parseInt(rs.getString(1))==1){
-							String id= (rs.getString(2) ); 
-							
-							try {
-								Statement st1= (Statement) con.createStatement(); 
-								ResultSet rqs;
-								rqs=st1.executeQuery("Select * from livres where id='"+id+"'"); 
-								if(rqs.next()){
-									
-									out.println(rqs.getString(4)+" ");
-								}
-							
-							
-							}
-							catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} 
-						
-			        	
-			        }
-					
-			        	
-			        	
-			        
-					
-					}
-					
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
 			
-			
-			%>		
+			<c:forEach items="${myListPaye}" var="livreP">  
+ 			<br>  ${livreP} <br />  
+			</c:forEach>  
+				
 			</h4>
 			
 			</fieldset>
