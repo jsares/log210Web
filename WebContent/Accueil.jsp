@@ -27,7 +27,7 @@
 				
 		<c:if test="${sessionScope.loginEtudiant != null}">
 			<a href="AjouterLivre.jsp"> <input type="button"
-			value="Ajouter un livre" name="Submit" id="frm_submit" />
+			value="Ajouter un livre" name="Submit" id="frm_submit" /></a>
 		</c:if>
 			
 	</c:if>

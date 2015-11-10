@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- Bootstrap -->
 <%@ page import ="java.sql.*" %>
 <%@ page import ="javax.sql.*" %>
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -52,7 +51,7 @@
 			<fieldset>
 			<h4>État</h4>
 			<div class="form-group">
-				<select name="etat" id="etat" onchange="calculerPrix()">
+				<select name="etat" id="etat">
 					<option value="Bon">Bon</option>
 					<option value="Passable">Passable</option>
 					<option value="Critique">Critique</option>

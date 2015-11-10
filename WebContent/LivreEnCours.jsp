@@ -1,4 +1,5 @@
 <!-- Bootstrap -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import ="java.sql.*" %>
 <%@ page import ="javax.sql.*" %>
 <link href="css/bootstrap.min.css" rel="stylesheet">

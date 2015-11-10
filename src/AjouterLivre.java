@@ -51,12 +51,27 @@ public class AjouterLivre extends HttpServlet {
 		id = request.getParameter("id");
 		etat = request.getParameter("etat");
 		
+		prix = determinerPrix(etat,prix);
+		
 		if(ajouterLivre(information, auteur, titre, prix, etat)){
 			preparerInfo(request);
 			request.getRequestDispatcher("/LivreEnCours.jsp").forward(request, response);
 		}
 		
 
+	}
+
+	private String determinerPrix(String etat, String prix) {
+		double prixFinal = Double.parseDouble(prix);
+		if(etat.equals("Bon")){
+			prixFinal *= 0.25;
+		}
+		else if(etat.equals("Passable"))
+			prixFinal *= 0.50;
+		else if(etat.equals("Critique"))
+			prixFinal *= 0.75;
+		
+		return String.valueOf(prixFinal);
 	}
 
 	private void preparerInfo(HttpServletRequest request) {
@@ -79,7 +94,7 @@ public class AjouterLivre extends HttpServlet {
 
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairielog210","admin","admin");
 			Statement st= (Statement) con.createStatement(); 
-			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, information, prix, etat) VALUES (0, 0, '"+titre+"','"+auteur+"','"+information+"','"+prix+"','"+etat+"')"); 
+			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, information, prix, etat, ean) VALUES (0, 0, '"+titre+"','"+auteur+"','"+information+"','"+prix+"','"+etat+"',0)"); 
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

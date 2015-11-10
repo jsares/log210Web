@@ -28,12 +28,13 @@
 						<div class="col-md-8" style="margin-bottom: 15px;">
 							<input type="text" name="code"
 								placeholder="Code ISBN du livre"
-								style="width: 250px;">
+								style="width: 250px;" required>
 						</div>
 					<div class="col-md-8" style="margin-bottom: 15px;">
 					<%session.setAttribute("action", "ajouterLivreRecherche");%>
 					<input type="submit" name="ISBN_Button" value="Code ISBN" >			
 					<input type="submit" name="UPC_Button" value="Code UPC" >
+					<input type="submit" name="EAN_Button" value="Code EAN" >
 				</div>
 					</div>
 				</fieldset>

@@ -65,21 +65,8 @@ public class ChercherLivre extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
-		if (request.getParameter("ISBN_Button") != null) {
-			typeEntree = "ISBN";
-			setEntree(request.getParameter("code"));
-		} else if (request.getParameter("UPC_Button") != null) {
-			typeEntree = "UPC";
-			setEntree(request.getParameter("code"));
-		} else if (request.getParameter("Auteur_Button") != null) {
-			typeEntree = "Auteur";
-			setEntree(request.getParameter("auteur"));
-		} else if (request.getParameter("Titre_Button") != null) {
-			typeEntree = "Titre";
-			setEntree(request.getParameter("titre"));
-		}
+		
+		setTypeEntree(request);
 
 
 		try {
@@ -121,6 +108,25 @@ public class ChercherLivre extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	private void setTypeEntree(HttpServletRequest request) {
+		if (request.getParameter("ISBN_Button") != null) {
+			typeEntree = "ISBN";
+			setEntree(request.getParameter("code"));
+		} else if (request.getParameter("UPC_Button") != null) {
+			typeEntree = "UPC";
+			setEntree(request.getParameter("code"));
+		} else if (request.getParameter("EAN_Button") != null) {
+			typeEntree = "EAN";
+			setEntree(request.getParameter("code"));
+		} else if (request.getParameter("Auteur_Button") != null) {
+			typeEntree = "Auteur";
+			setEntree(request.getParameter("auteur"));
+		} else if (request.getParameter("Titre_Button") != null) {
+			typeEntree = "Titre";
+			setEntree(request.getParameter("titre"));
 		}
 	}
 
