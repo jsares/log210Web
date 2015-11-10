@@ -59,7 +59,7 @@ public class LoginGestionnaire extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection con;
 			ResultSet rs;
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
 			Map<String, String> messages = new HashMap<String, String>();
 			Statement st= (Statement) con.createStatement(); 
 			rs = st.executeQuery("select password from gestionnaire where email = '" + courriel + "'");
@@ -67,7 +67,7 @@ public class LoginGestionnaire extends HttpServlet {
 			if (rs.next()) { //connection reussi
 				if (rs.getString("password").equals(mdp)) {
 					session.setAttribute("loginGestionnaire", courriel);
-					rd = request.getRequestDispatcher("Accueil.jsp");
+					rd = request.getRequestDispatcher("AcceuilGestionnaire.jsp");
 				}
 				else { //mdp ou courriel ne correspondent pas
 					request.setAttribute("messages", messages); // Now it's available by ${messages}
@@ -93,7 +93,7 @@ public class LoginGestionnaire extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				java.sql.Connection con;
 				ResultSet rs;
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
+				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
 				Map<String, String> messages = new HashMap<String, String>();
 				Statement st= (Statement) con.createStatement(); 
 				rs = st.executeQuery("select * from gestionnaire where telephone = '" + telephone + "'");
@@ -104,7 +104,7 @@ public class LoginGestionnaire extends HttpServlet {
 					if (rs.getString("password").equals(mdp)) {
 						setCourriel(rs.getString("email"));						
 						session.setAttribute("loginGestionnaire", courriel);
-						rd = request.getRequestDispatcher("Accueil.jsp");
+						rd = request.getRequestDispatcher("AcceuilGestionnaire.jsp");
 					}
 					else { //mdp ou courriel ne correspondent pas
 						request.setAttribute("messages", messages); // Now it's available by ${messages}

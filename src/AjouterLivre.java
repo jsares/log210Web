@@ -92,7 +92,7 @@ public class AjouterLivre extends HttpServlet {
 		java.sql.Connection con;
 		try {
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairielog210","admin","admin");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
 			Statement st= (Statement) con.createStatement(); 
 			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, information, prix, etat, ean) VALUES (0, 0, '"+titre+"','"+auteur+"','"+information+"','"+prix+"','"+etat+"',0)"); 
 			return true;
