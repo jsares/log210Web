@@ -9,6 +9,8 @@ import java.net.URLConnection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import log210Web.SignedRequestsHelper;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -167,6 +171,15 @@ public class ChercherLivre extends HttpServlet {
 	private void chercherLivreISBNDB(HttpServletRequest request){
 		URL url;
 		try {
+		    final Map<String, String> myMap;
+		    {
+		        myMap = new HashMap<String, String>();
+		        myMap.put("a", "b");
+		        myMap.put("c", "d");
+		    }
+			SignedRequestsHelper s = new SignedRequestsHelper();
+			String allo = s.sign(myMap);
+			
 			String titre = "";
 			String auteur = "";
 			url = new URL("http://isbndb.com/api/books.xml?access_key="+accesKey+"&index1=isbn&value1="+entree);

@@ -64,12 +64,12 @@ public class AjouterLivre extends HttpServlet {
 	private String determinerPrix(String etat, String prix) {
 		double prixFinal = Double.parseDouble(prix);
 		if(etat.equals("Bon")){
-			prixFinal *= 0.25;
+			prixFinal *= 0.75;
 		}
 		else if(etat.equals("Passable"))
 			prixFinal *= 0.50;
 		else if(etat.equals("Critique"))
-			prixFinal *= 0.75;
+			prixFinal *= 0.25;
 		
 		return String.valueOf(prixFinal);
 	}
