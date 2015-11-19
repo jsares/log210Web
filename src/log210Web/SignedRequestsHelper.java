@@ -49,16 +49,18 @@ public class SignedRequestsHelper {
 		}
 	}
 
-	public String sign(Map<String, String> params) {
+	public String sign(Map<String, String> params, String code, String type) {
 		params.put("AWSAccessKeyId", awsAccessKeyId);
 		params.put("Timestamp", timestamp());
 		params.put("Operation", "ItemLookup");
 		params.put("Service", "AWSECommerceService");
 		//params.put("Version", "2009-03-31");
 		params.put("AssociateTag", "NON ASSOCIATE");
-		params.put("IdType", "ISBN");
+		params.put("IdType", type);
+		//params.put("IdType", "ISBN");
 		params.put("SearchIndex", "Books");
-		params.put("ItemId", "1111111111");
+		params.put("ItemId", code);
+		//params.put("ItemId", "1111111111");
 		params.put("ResponseGroup", "ItemAttributes");
 
 		SortedMap<String, String> sortedParamMap =
@@ -78,6 +80,33 @@ public class SignedRequestsHelper {
 		return url;
 	}
 
+	public String signForPrice(Map<String, String> params, String asin) {
+		params.put("AWSAccessKeyId", awsAccessKeyId);
+		params.put("Timestamp", timestamp());
+		params.put("Operation", "ItemLookup");
+		params.put("Service", "AWSECommerceService");
+		params.put("AssociateTag", "NON ASSOCIATE");
+		params.put("ItemType", "asin");
+		params.put("ItemId", asin);
+		params.put("ResponseGroup", "Offers");
+
+		SortedMap<String, String> sortedParamMap =
+				new TreeMap<String, String>(params);
+		String canonicalQS = canonicalize(sortedParamMap);
+		String toSign =
+				REQUEST_METHOD + "\n"
+						+ endpoint + "\n"
+						+ REQUEST_URI + "\n"
+						+ canonicalQS;
+
+		String hmac = hmac(toSign);
+		String sig = percentEncodeRfc3986(hmac);
+		String url = "http://" + endpoint + REQUEST_URI + "?" +
+				canonicalQS + "&Signature=" + sig;
+
+		return url;
+	}
+	
 	private String hmac(String stringToSign) {
 		String signature = null;
 		byte[] data;

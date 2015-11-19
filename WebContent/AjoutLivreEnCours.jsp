@@ -32,13 +32,7 @@
 	        		<input type="text" id="auteur" name="auteur" class="form-control" value="<%= request.getAttribute("auteur")%>" placeholder="Entrer un auteur" required autofocus>
 	
 	    	</div>
-			</fieldset>
-			<fieldset>
-			<h4>Information</h4>
-			<div class="form-group">
-	        		<input type="text" id="information" name="information" class="form-control" value="<%= request.getAttribute("information")%>" placeholder="" required autofocus>
-	    	</div>
-			</fieldset>		
+			</fieldset>	
 			<fieldset>
 			<h4>Prix($)</h4>
 			<div class="form-group">

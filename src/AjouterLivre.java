@@ -18,7 +18,6 @@ import com.mysql.jdbc.Statement;
 @WebServlet("/AjouterLivre")
 public class AjouterLivre extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String information = "";
 	private String auteur = "";
 	private String titre = "";
 	private String prix = "";
@@ -44,7 +43,6 @@ public class AjouterLivre extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		information = request.getParameter("information");
 		auteur = request.getParameter("auteur");
 		titre = request.getParameter("titre");
 		prix = request.getParameter("prix");
@@ -53,7 +51,7 @@ public class AjouterLivre extends HttpServlet {
 		
 		prix = determinerPrix(etat,prix);
 		
-		if(ajouterLivre(information, auteur, titre, prix, etat)){
+		if(ajouterLivre(auteur, titre, prix, etat)){
 			preparerInfo(request);
 			request.getRequestDispatcher("/LivreEnCours.jsp").forward(request, response);
 		}
@@ -63,9 +61,8 @@ public class AjouterLivre extends HttpServlet {
 
 	private String determinerPrix(String etat, String prix) {
 		double prixFinal = Double.parseDouble(prix);
-		if(etat.equals("Bon")){
+		if(etat.equals("Bon"))
 			prixFinal *= 0.75;
-		}
 		else if(etat.equals("Passable"))
 			prixFinal *= 0.50;
 		else if(etat.equals("Critique"))
@@ -75,14 +72,13 @@ public class AjouterLivre extends HttpServlet {
 	}
 
 	private void preparerInfo(HttpServletRequest request) {
-		request.setAttribute("information", information);
 		request.setAttribute("auteur", auteur);
 		request.setAttribute("titre", titre);
 		request.setAttribute("etat", etat);
 		request.setAttribute("prix", prix);
 	}
 
-	private boolean ajouterLivre(String information, String auteur, String titre, String prix, String etat) {
+	private boolean ajouterLivre(String auteur, String titre, String prix, String etat) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
@@ -94,7 +90,7 @@ public class AjouterLivre extends HttpServlet {
 
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairielog210","admin","admin");
 			Statement st= (Statement) con.createStatement(); 
-			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, information, prix, etat, ean) VALUES (0, 0, '"+titre+"','"+auteur+"','"+information+"','"+prix+"','"+etat+"',0)"); 
+			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, prix, etat, ean) VALUES (0, 0, '"+titre+"','"+auteur+"','"+prix+"','"+etat+"',0)"); 
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

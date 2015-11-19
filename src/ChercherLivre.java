@@ -21,6 +21,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import log210Web.AmazonInfo;
 import log210Web.SignedRequestsHelper;
 
 import org.w3c.dom.Document;
@@ -39,13 +40,13 @@ public class ChercherLivre extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String entree = "";
 	private String typeEntree = "";
-	private String information = "";
 	private String auteur = "";
 	private String titre = "";
 	private String prix = "";
+	private String asin = "";
 	private String id = "";
 	private String etat = "";
-	private String accesKey = "RI48ATRC";
+	private String link = "";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -96,8 +97,12 @@ public class ChercherLivre extends HttpServlet {
 				chercheLivredb(rs);
 			}
 
-			if(auteur == "" || titre == "")
-				chercherLivreISBNDB(request);
+			if(auteur == "" || titre == ""){
+				//chercherLivreISBNDB(request);
+				AmazonInfo amazonInfo = new AmazonInfo(entree, typeEntree);
+				link = amazonInfo.callForSign();
+				chercherLivreAmazon(request, link);
+			}
 			else
 				preparerInfo(request);
 			
@@ -135,8 +140,6 @@ public class ChercherLivre extends HttpServlet {
 	}
 
 	private void checkIfNull(HttpServletRequest request) {
-		if(request.getAttribute("information") == null)
-			request.setAttribute("information", "");
 		if(request.getAttribute("auteur") == null)
 			request.setAttribute("auteur", "");
 		if(request.getAttribute("titre") == null)
@@ -147,7 +150,6 @@ public class ChercherLivre extends HttpServlet {
 	}
 
 	private void chercheLivredb(ResultSet rs) throws SQLException {
-		information = (rs.getString(6) ); 
 		auteur = (rs.getString(5) ); 
 		titre = (rs.getString(4) ); 
 		prix = (rs.getString(7) ); 
@@ -156,7 +158,6 @@ public class ChercherLivre extends HttpServlet {
 	}
 
 	private void preparerInfo(HttpServletRequest request) {
-		request.setAttribute("information", information);
 		request.setAttribute("titre", titre);
 		request.setAttribute("auteur", auteur);
 		request.setAttribute("prix", prix);
@@ -168,21 +169,16 @@ public class ChercherLivre extends HttpServlet {
 		this.entree = entree;
 	}
 
-	private void chercherLivreISBNDB(HttpServletRequest request){
+	
+	private void chercherLivreAmazon(HttpServletRequest request, String link){
 		URL url;
 		try {
-		    final Map<String, String> myMap;
-		    {
-		        myMap = new HashMap<String, String>();
-		        myMap.put("a", "b");
-		        myMap.put("c", "d");
-		    }
-			SignedRequestsHelper s = new SignedRequestsHelper();
-			String allo = s.sign(myMap);
 			
 			String titre = "";
 			String auteur = "";
-			url = new URL("http://isbndb.com/api/books.xml?access_key="+accesKey+"&index1=isbn&value1="+entree);
+			String nbPages = "";
+			//url = new URL("http://isbndb.com/api/books.xml?access_key="+accesKey+"&index1=isbn&value1="+entree);
+			url = new URL(link);
 
 			URLConnection urlConnection = url.openConnection();
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -194,37 +190,95 @@ public class ChercherLivre extends HttpServlet {
 
 			doc.getDocumentElement().normalize();
 
-			NodeList nList = doc.getElementsByTagName("BookData");
+			NodeList nListInfo = doc.getElementsByTagName("ItemAttributes");
 
-			for (int temp = 0; temp < nList.getLength(); temp++) {
+			//for (int temp = 0; temp < nListInfo.getLength(); temp++) {
 
-				Node nNode = nList.item(temp);
+				Node nNode = nListInfo.item(0);
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
 
-					titre = eElement.getElementsByTagName("Title").item(0).getTextContent();
-					auteur = eElement.getElementsByTagName("AuthorsText").item(0).getTextContent();
+					if(eElement.getElementsByTagName("Title").item(0) != null)
+						titre = eElement.getElementsByTagName("Title").item(0).getTextContent();
+					if(eElement.getElementsByTagName("Author").item(0) != null)
+						auteur = eElement.getElementsByTagName("Author").item(0).getTextContent();
+					if(eElement.getElementsByTagName("NumberOfPages").item(0) != null)
+						nbPages = eElement.getElementsByTagName("NumberOfPages").item(0).getTextContent();
 				}
 
+				//}
+
+				NodeList nListAsin = doc.getElementsByTagName("Item");
+
+				nNode = nListAsin.item(0);
+
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+
+				if(eElement.getElementsByTagName("ASIN").item(0) != null)
+					asin = eElement.getElementsByTagName("ASIN").item(0).getTextContent();
+			}
+
+
+			if(asin != ""){
+				in.close();
+				chercherPrixAmazon();
 			}
 			
 			request.setAttribute("titre", titre);
 			request.setAttribute("auteur", auteur);
-			request.setAttribute("information", "");
-			request.setAttribute("prix", "");
+			request.setAttribute("nbPages", nbPages);
+			request.setAttribute("prix", this.prix);
 			
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+
+	private void chercherPrixAmazon() {
+		String link;
+		URL url;
+		AmazonInfo amazonInfo = new AmazonInfo(asin);
+		link = amazonInfo.callForPrice();
+
+		try {
+			url = new URL(link);
+
+
+			URLConnection urlConnection = url.openConnection();
+			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse( in );
+
+
+			doc.getDocumentElement().normalize();
+
+			NodeList nListPrix = doc.getElementsByTagName("LowestNewPrice");
+
+			Node nNodePrix = nListPrix.item(0);
+
+			if (nNodePrix.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) nNodePrix;
+
+				if(eElement.getElementsByTagName("FormattedPrice").item(0) != null)
+					this.prix = eElement.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+			}
+			
+			if(this.prix != "")
+				formatPrix();
+
 
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		// Source: http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/ 
-		//**********************************
-		//**************************************
-		//*************************************
-		//**************************************
-		catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
@@ -234,8 +288,12 @@ public class ChercherLivre extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
-
+	private void formatPrix() {
+		String str = this.prix;
+		this.prix = str.substring(1);
+		
 	}
 
 }

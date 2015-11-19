@@ -31,12 +31,7 @@
 			out.println(request.getAttribute("auteur") ); 
 			%>
 			</fieldset>
-			<fieldset>
-			<h4>Information</h4>
-			<%
-			out.println(request.getAttribute("information") ); 
-			%>	
-			</fieldset>		
+			<fieldset>	
 			<fieldset>
 			<h4>Prix ($)</h4>
 			<%
