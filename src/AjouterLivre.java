@@ -23,6 +23,10 @@ public class AjouterLivre extends HttpServlet {
 	private String prix = "";
 	private String id = "";
 	private String etat = "";
+	private String isbn = "";
+	private String ean = "";
+	private String upc = "";
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -48,15 +52,40 @@ public class AjouterLivre extends HttpServlet {
 		prix = request.getParameter("prix");
 		id = request.getParameter("id");
 		etat = request.getParameter("etat");
+		isbn = request.getParameter("isbn");
+		upc = request.getParameter("upc");
+		ean = request.getParameter("ean");
 		
 		prix = determinerPrix(etat,prix);
 		
-		if(ajouterLivre(auteur, titre, prix, etat)){
+		checkIfNull();
+		
+		if(ajouterLivre(auteur, titre, prix, etat, isbn, upc, ean)){
 			preparerInfo(request);
 			request.getRequestDispatcher("/LivreEnCours.jsp").forward(request, response);
 		}
 		
 
+	}
+
+	private void checkIfNull() {
+		if(auteur == null)
+			auteur = "";
+		if(titre == null)
+			titre = "";
+		if(prix == null)
+			prix = "";
+		if(id == null)
+			id = "";
+		if(etat == null)
+			etat = "";
+		if(isbn == null || isbn == "")
+			isbn = "0";
+		if(upc == null)
+			upc = "0";
+		if(ean == null)
+			ean = "0";
+		
 	}
 
 	private String determinerPrix(String etat, String prix) {
@@ -78,7 +107,7 @@ public class AjouterLivre extends HttpServlet {
 		request.setAttribute("prix", prix);
 	}
 
-	private boolean ajouterLivre(String auteur, String titre, String prix, String etat) {
+	private boolean ajouterLivre(String auteur, String titre, String prix, String etat, String isbn, String upc, String ean) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
@@ -90,7 +119,7 @@ public class AjouterLivre extends HttpServlet {
 
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairielog210","admin","admin");
 			Statement st= (Statement) con.createStatement(); 
-			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, prix, etat, ean) VALUES (0, 0, '"+titre+"','"+auteur+"','"+prix+"','"+etat+"',0)"); 
+			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, prix, etat, ean) VALUES ('"+isbn+"', '"+upc+"', '"+titre+"','"+auteur+"','"+prix+"','"+etat+"','"+ean+"')"); 
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

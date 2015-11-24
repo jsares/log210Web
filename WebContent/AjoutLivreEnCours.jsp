@@ -51,12 +51,20 @@
 					<option value="Critique">Critique</option>
 				</select>
 	    	</div>	
+	    	<input type="hidden" name="isbn" id="isbn" value="<%= request.getAttribute("isbn")%>">
+	    	<input type="hidden" name="upc" id="upc" value="<%= request.getAttribute("upc")%>">
+	    	<input type="hidden" name="ean" id="ean" value="<%= request.getAttribute("ean")%>">
 			</fieldset>	
 			</fieldset>
 			
 
 			<div class="col-md-8" style="margin-bottom: 15px;">
 				<input type="submit" name="confirmer" value="Confirmer">
+			</div>
+			
+			<div class="col-md-8" style="margin-top: 15px;">
+				<a href="AjouterLivre.jsp"> <input type="button" value="Retour" />
+				</a>
 			</div>
 		
 	</div>

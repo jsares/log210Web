@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,6 +48,10 @@ public class ChercherLivre extends HttpServlet {
 	private String id = "";
 	private String etat = "";
 	private String link = "";
+	private String isbn = "";
+	private String ean = "";
+	private String upc = "";
+	private String error = "";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -70,7 +75,10 @@ public class ChercherLivre extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
+		auteur = "";
+		titre = "";
+		RequestDispatcher rd = request.getRequestDispatcher("AjouterLivre.jsp");
+		Map<String, String> messages = new HashMap<String, String>();
 		setTypeEntree(request);
 
 
@@ -95,6 +103,7 @@ public class ChercherLivre extends HttpServlet {
 
 			if(rs.next()){
 				chercheLivredb(rs);
+				this.error = "";
 			}
 
 			if(auteur == "" || titre == ""){
@@ -102,13 +111,22 @@ public class ChercherLivre extends HttpServlet {
 				AmazonInfo amazonInfo = new AmazonInfo(entree, typeEntree);
 				link = amazonInfo.callForSign();
 				chercherLivreAmazon(request, link);
+				if(this.error != null || this.error == ""){
+					request.setAttribute("messages", messages);
+					messages.put("msgErreur", this.error);         
+				}
 			}
 			else
 				preparerInfo(request);
 			
 			checkIfNull(request);
 
-			if(request.getSession().getAttribute("action") == "ajouterLivreRecherche"){
+			if(this.error != ""){
+				request.getRequestDispatcher("/AjouterLivre.jsp").forward(request, response);
+				request.getSession().removeAttribute("auteur");
+				request.getSession().removeAttribute("titre");
+			}
+			else if(request.getSession().getAttribute("action") == "ajouterLivreRecherche"){
 				request.getSession().removeAttribute("action");
 				request.getRequestDispatcher("/AjoutLivreEnCours.jsp").forward(request, response);
 			}
@@ -150,11 +168,14 @@ public class ChercherLivre extends HttpServlet {
 	}
 
 	private void chercheLivredb(ResultSet rs) throws SQLException {
-		auteur = (rs.getString(5) ); 
-		titre = (rs.getString(4) ); 
-		prix = (rs.getString(7) ); 
 		id = (rs.getString(1) ); 
-		etat = (rs.getString(8));
+		isbn = (rs.getString(2) ); 
+		upc = (rs.getString(3) ); 
+		titre = (rs.getString(4) ); 
+		auteur = (rs.getString(5) ); 
+		prix = (rs.getString(6) ); 
+		etat = (rs.getString(7));
+		ean = (rs.getString(8) ); 
 	}
 
 	private void preparerInfo(HttpServletRequest request) {
@@ -162,6 +183,9 @@ public class ChercherLivre extends HttpServlet {
 		request.setAttribute("auteur", auteur);
 		request.setAttribute("prix", prix);
 		request.setAttribute("id", id);
+		request.setAttribute("isbn", this.isbn);
+		request.setAttribute("upc", this.upc);
+		request.setAttribute("ean", this.ean);
 	}
 
 
@@ -192,23 +216,38 @@ public class ChercherLivre extends HttpServlet {
 
 			NodeList nListInfo = doc.getElementsByTagName("ItemAttributes");
 
-			//for (int temp = 0; temp < nListInfo.getLength(); temp++) {
-
+			if(nListInfo.item(0) != null){
 				Node nNode = nListInfo.item(0);
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-
 					if(eElement.getElementsByTagName("Title").item(0) != null)
 						titre = eElement.getElementsByTagName("Title").item(0).getTextContent();
+					else if(eElement.getElementsByTagName("Brand").item(0) != null)
+						titre = eElement.getElementsByTagName("Brand").item(0).getTextContent();
+
 					if(eElement.getElementsByTagName("Author").item(0) != null)
 						auteur = eElement.getElementsByTagName("Author").item(0).getTextContent();
+					else if(eElement.getElementsByTagName("Artist").item(0) != null)
+						auteur = eElement.getElementsByTagName("Artist").item(0).getTextContent();
+
+					if(eElement.getElementsByTagName("FormattedPrice").item(0) != null)
+						this.prix = eElement.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+
 					if(eElement.getElementsByTagName("NumberOfPages").item(0) != null)
 						nbPages = eElement.getElementsByTagName("NumberOfPages").item(0).getTextContent();
+
+					if(eElement.getElementsByTagName("ISBN").item(0) != null)
+						isbn = eElement.getElementsByTagName("ISBN").item(0).getTextContent();
+					if(eElement.getElementsByTagName("EAN").item(0) != null)
+						ean = eElement.getElementsByTagName("EAN").item(0).getTextContent();
+					if(eElement.getElementsByTagName("UPC").item(0) != null)
+						upc = eElement.getElementsByTagName("UPC").item(0).getTextContent();
+					
+					this.error = "";
 				}
 
-				//}
-
+			
 				NodeList nListAsin = doc.getElementsByTagName("Item");
 
 				nNode = nListAsin.item(0);
@@ -218,6 +257,19 @@ public class ChercherLivre extends HttpServlet {
 
 				if(eElement.getElementsByTagName("ASIN").item(0) != null)
 					asin = eElement.getElementsByTagName("ASIN").item(0).getTextContent();
+			}
+			}
+
+			NodeList nListError = doc.getElementsByTagName("Error");
+
+			if(nListError.item(0) != null){
+				Node nNode = nListError.item(0);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+					if(eElement.getElementsByTagName("Message").item(0) != null){
+						error = "Désolé, nous ne trouvons pas de livre associé à ce code dans nos archives.";
+					} 
+				}
 			}
 
 
@@ -230,6 +282,9 @@ public class ChercherLivre extends HttpServlet {
 			request.setAttribute("auteur", auteur);
 			request.setAttribute("nbPages", nbPages);
 			request.setAttribute("prix", this.prix);
+			request.setAttribute("isbn", this.isbn);
+			request.setAttribute("upc", this.upc);
+			request.setAttribute("ean", this.ean);
 			
 
 		} catch (Exception e) {
@@ -264,13 +319,15 @@ public class ChercherLivre extends HttpServlet {
 
 			Node nNodePrix = nListPrix.item(0);
 
-			if (nNodePrix.getNodeType() == Node.ELEMENT_NODE) {
-				Element eElement = (Element) nNodePrix;
+			if(nListPrix.item(0) != null){
+				if (nNodePrix.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNodePrix;
 
-				if(eElement.getElementsByTagName("FormattedPrice").item(0) != null)
-					this.prix = eElement.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+					if(eElement.getElementsByTagName("FormattedPrice").item(0) != null)
+						this.prix = eElement.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+				}
 			}
-			
+
 			if(this.prix != "")
 				formatPrix();
 
