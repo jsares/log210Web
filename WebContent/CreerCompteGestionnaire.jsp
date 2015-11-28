@@ -1,12 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/signin.css" rel="stylesheet">
 <jsp:include page="header.jsp"></jsp:include>
 <title>Créer un compte gestionnaire</title>
-</head>
-<body>
 
 	<div class="container">
       <form class="form-signin" action="/log210Web/CreerCompteGestionnaire" method=post>

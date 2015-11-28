@@ -1,6 +1,4 @@
-<!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/signin.css" rel="stylesheet">
+
 <jsp:include page="header.jsp"></jsp:include>
 
 <div class="container">
@@ -26,3 +24,5 @@
       </form>
 
 </div> <!-- /container -->
+</body>
+</html>

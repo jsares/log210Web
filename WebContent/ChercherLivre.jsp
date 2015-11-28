@@ -1,77 +1,97 @@
-<!-- Bootstrap -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<jsp:include page="header.jsp"/>
+
+    <title>Système d'échange de livres - Rechercher un livre</title>
 
 
 
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/signin.css" rel="stylesheet">
-<jsp:include page="header.jsp"></jsp:include>
-<title>Réserver un livre</title>
-</head>
-<body>
-	<h3>Chercher un livre</h3>
-	<div class="container-fluid">
-		<form class="form-signin" action="/log210Web/ChercherLivre" method=post>
-		
-			<fieldset>
-				<h3>Chercher un livre à partir de son code</h3>
-				<div class="row">
-					<div class="col-md-8" style="margin-bottom: 15px;">
-						<input type="text" name="code"
-							placeholder="Veuillez entrer le code"
-							style="width: 250px;">
-					</div>
-				<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="submit" name="ISBN_Button" value="Code ISBN" >
-				<input type="submit" name="UPC_Button" value="Code UPC" >
-				
-				</div>
-			</fieldset>
-			
-			
-			<fieldset>
-				<h3>Chercher un livre à partir l'auteur</h3>
-				<div class="row">
-					<div class="col-md-8" style="margin-bottom: 15px;">
-						<input type="text" name="auteur"
-							placeholder="Veuillez entrer le nom de l'auteur"
-							style="width: 250px;">
-					</div>
-				<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="submit" name="Auteur_Button" value="Auteur" >
-				</div>
-			</fieldset>
-			
-			
-			<fieldset>
-				<h3>Chercher un livre à partir du titre</h3>
-				<div class="row">
-					<div class="col-md-8" style="margin-bottom: 15px;">
-						<input type="text" name="titre"
-							placeholder="Veuillez entrer une partie du titre"
-							style="width: 250px;">
-					</div>
-				<div class="col-md-8" style="margin-bottom: 15px;">
-				<input type="submit" name="Titre_Button" value="Titre" >
-				</div>
-			</fieldset>
-			
-		</form>
-		
-		
+    <!-- Page Content -->
+    <div class="container">
+  <div class="body-card">
+        <!-- Jumbotron Header -->
+        <div class="jumbotron">
+            <h1>Rechercher un livre <small>à partir de son...</small></h1>
+            <br>
+             <div class="row-fluid">
+<form class="form-signin" action="/log210Web/ChercherLivre" method="post">
+		            
+
+<fieldset>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Titre</h3>
 	</div>
-	
-	<div>
-		<form class="form-signin" action="/log210Web/Logout" method=post>
-			<c:if test="${sessionScope.loginGestionnaire != null || sessionScope.loginEtudiant != null}">
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Se
-					déconnecter</button>
-			</c:if>
-		</form>
+	<div class="panel-body">
+		<div class="container">
+					<div class="row" style="margin-bottom: 15px;">
+						<input type="text" name="titre" placeholder="Entrer une partie du titre" class="form-control">
+					</div>
+				<div class="row" style="margin-bottom: 15px;">
+			    	<button type="submit" name="Titre_Button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></span> Rechercher par titre</button>
+				</div>
+		</div>
 	</div>
-	
-	
+</div>
+</fieldset>
 
-	
+<fieldset>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Auteur</h3>
+	</div>
+	<div class="panel-body">
+		<div class="container">
+					<div class="row" style="margin-bottom: 15px;">
+						<input type="text" name="auteur" placeholder="Entrer l'auteur" class="form-control">
+					</div>
+				<div class="row" style="margin-bottom: 15px;">
+				 <button type="submit" name="Auteur_Button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></span> Rechercher par auteur</button>
+				</div>
+		</div>
+	</div>
+</div>
+</fieldset>
+            
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Code</h3>
+	</div>
+	<div class="panel-body">
+		<div class="container">
+			<div class="row" style="margin-bottom: 15px;">
+				<input type="text" name="code" placeholder="Entrer le code" class="form-control">
+			</div>
+			<div class="row" style="margin-bottom: 15px;">
+				<button type="submit" name="ISBN_Button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></span> Rechercher par code ISBN</button>
+				<button type="submit" name="UPC_Button" class="btn btn-danger"><span class="glyphicon glyphicon-search"></span> Rechercher par code UPC</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</form>
+       
+      
+</div>
+    
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+
+
+
+</div></div></div>
+
 </body>
 </html>
+
+
+
+
+	

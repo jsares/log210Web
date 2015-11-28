@@ -1,8 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/signin.css" rel="stylesheet">
 
+
+<jsp:include page="header.jsp"/>
 
 <h3>Votre transaction est confirmé</h3>
 
@@ -21,6 +19,8 @@
 	<a href="ChercherLivre.jsp"> <button class="btn btn-lg btn-primary btn-block" type="submit"><h4>Chercher 
 	un livre</h4></button>
 
+	</body>
+</html>
 			
 			
 	

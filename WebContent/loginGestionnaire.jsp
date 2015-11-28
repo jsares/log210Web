@@ -1,7 +1,5 @@
-<!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/signin.css" rel="stylesheet">
-<jsp:include page="header.jsp"></jsp:include>
+
+	<!-- c:if test="${sessionScope.loginGestionnaire == null}"> -->
 
 <div class="container">
       <form class="form-signin" action="/log210Web/LoginGestionnaire" method=post>
@@ -26,6 +24,8 @@
       </form>
 
 </div> <!-- /container -->
-
-
-<jsp:include page="header.jsp"></jsp:include>
+		
+	<!-- /c:if> -->
+</body>
+</html>
+	

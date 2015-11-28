@@ -1,7 +1,5 @@
-<!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/signin.css" rel="stylesheet">
-<jsp:include page="header.jsp"></jsp:include>
+
+<jsp:include page="header.jsp"/>
 
 <div class="container">
       <form class="form-signin" action="/log210Web/LoginEtudiant" method=post>
@@ -22,4 +20,5 @@
 
 </div> <!-- /container -->
 
-<jsp:include page="header.jsp"></jsp:include>
+</body>
+</html>
