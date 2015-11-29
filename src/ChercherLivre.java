@@ -91,7 +91,7 @@ public class ChercherLivre extends HttpServlet {
 
 		try {
 
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/LibrairieLog210","admin","admin");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
 			Statement st= (Statement) con.createStatement(); 
 			ResultSet rs;
 			if(typeEntree == "Titre"){
