@@ -91,7 +91,7 @@ public class ChercherLivre extends HttpServlet {
 
 		try {
 
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
+			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
 			Statement st= (Statement) con.createStatement(); 
 			ResultSet rs;
 			if(typeEntree == "Titre"){
@@ -203,7 +203,8 @@ public class ChercherLivre extends HttpServlet {
 			String nbPages = "";
 			//url = new URL("http://isbndb.com/api/books.xml?access_key="+accesKey+"&index1=isbn&value1="+entree);
 			url = new URL(link);
-
+			System.out.println(url.toString());
+			
 			URLConnection urlConnection = url.openConnection();
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -325,6 +326,20 @@ public class ChercherLivre extends HttpServlet {
 
 					if(eElement.getElementsByTagName("FormattedPrice").item(0) != null)
 						this.prix = eElement.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+				}
+			}
+			else{
+				nListPrix = doc.getElementsByTagName("LowestUsedPrice");
+
+				nNodePrix = nListPrix.item(0);
+
+				if(nListPrix.item(0) != null){
+					if (nNodePrix.getNodeType() == Node.ELEMENT_NODE) {
+						Element eElement = (Element) nNodePrix;
+
+						if(eElement.getElementsByTagName("FormattedPrice").item(0) != null)
+							this.prix = eElement.getElementsByTagName("FormattedPrice").item(0).getTextContent();
+					}
 				}
 			}
 

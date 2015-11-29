@@ -59,7 +59,7 @@ public class LoginGestionnaire extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection con;
 			ResultSet rs;
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
 			Map<String, String> messages = new HashMap<String, String>();
 			Statement st= (Statement) con.createStatement(); 
 			rs = st.executeQuery("select password from gestionnaire where email = '" + courriel + "'");
