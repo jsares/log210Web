@@ -45,7 +45,7 @@ public class LivrePaye extends HttpServlet {
 			java.sql.Connection con;
 			try {
 				
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
+				con = DerbyUtils.getConnection();
 				Statement st= (Statement) con.createStatement(); 
 				int rs=st.executeUpdate("update reservation set payed = 1 where etudiant = '"+session.getAttribute("utilisateur")+"' ");
 				

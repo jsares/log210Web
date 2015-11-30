@@ -57,17 +57,11 @@ public class ReserverLivre extends HttpServlet {
             id = (String) (request.getSession().getAttribute("id"));
             prix =  (String) (request.getSession().getAttribute("prix"));
             System.out.println(id + prix);
-            try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-            
+                       
             java.sql.Connection con;
 			try {
 				
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3307/LibrairieLog210","admin","admin");
+				con = DerbyUtils.getConnection();
 				Statement st= (Statement) con.createStatement(); 
 				int rs=st.executeUpdate("INSERT INTO reservation (etudiant, id, prix, payed) VALUES ('"+(session.getAttribute("utilisateur"))+"', '"+(this.id)+"', '"+(this.prix)+"','"+(0)+"')"); 
 				
@@ -78,7 +72,7 @@ public class ReserverLivre extends HttpServlet {
 			/////ListeReserve
 			try {
 				
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
+				con = DerbyUtils.getConnection();
 				Statement st= (Statement) con.createStatement(); 
 				int prixInt = 0;
 				ResultSet rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
@@ -119,7 +113,7 @@ public class ReserverLivre extends HttpServlet {
 			/////ListPayé
 			try {
 				
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
+				con = DerbyUtils.getConnection();
 				Statement st= (Statement) con.createStatement(); 
 				ResultSet rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
 			

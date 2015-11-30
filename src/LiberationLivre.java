@@ -50,10 +50,8 @@ public class LiberationLivre extends HttpServlet {
             System.out.println("EMAIL RECONNU =" + email);
             
             try {
-            	
-            
-			Class.forName("com.mysql.jdbc.Driver");			
-            java.sql.Connection con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
+            			
+            	java.sql.Connection con =  DerbyUtils.getConnection();
 			 	ResultSet rs;
 				Statement st= (Statement) con.createStatement(); 
 				rs=st.executeQuery("SELECT * FROM reservation where payed = '1' AND etudiant = '"+email+"'"); /////////////////
@@ -72,7 +70,7 @@ public class LiberationLivre extends HttpServlet {
 								System.out.println("Connection 2 etablit");
 								System.out.println("ID Utilisé =" + rs.getString(1));
 								if(rqs.next()){
-									ListePayes.add(new String[] {rqs.getString(4), rqs.getString(5)});
+									ListePayes.add(new String[] {rqs.getString(4), rqs.getString(5), rqs.getString(1)});
 								}
 								
 							
@@ -89,9 +87,6 @@ public class LiberationLivre extends HttpServlet {
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				} 
 				
 				

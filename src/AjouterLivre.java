@@ -108,16 +108,11 @@ public class AjouterLivre extends HttpServlet {
 	}
 
 	private boolean ajouterLivre(String auteur, String titre, String prix, String etat, String isbn, String upc, String ean) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		java.sql.Connection con;
 		try {
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
+			con = DerbyUtils.getConnection();
 			Statement st= (Statement) con.createStatement(); 
 			int rs=st.executeUpdate("INSERT INTO livres (ISBN,UPC, titre, auteur, prix, etat, ean) VALUES ('"+isbn+"', '"+upc+"', '"+titre+"','"+auteur+"','"+prix+"','"+etat+"','"+ean+"')"); 
 			return true;

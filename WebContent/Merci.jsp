@@ -14,12 +14,22 @@
 					déconnecter</button>
 			</c:if>
 		</form>
+		<form class="form-signin" action="/log210Web/AcceuilGestionnaire" method=post>
+			<c:if test="${sessionScope.loginGestionnaire != null}">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Libérer d'autres livres
+				</button>
+			</c:if>
+		</form>
 	</div>
 
-
-
-	<a href="ChercherLivre.jsp"> <button class="btn btn-lg btn-primary btn-block" type="submit"><h4>Chercher 
-	un livre</h4></button>
+	<div>
+		<form class="form-signin" >
+			<c:if test="${sessionScope.loginEtudiant != null}">
+				<a href="ChercherLivre.jsp"> <button class="btn btn-lg btn-primary btn-block" type="submit"><h4>Chercher 
+				un livre</h4></button>
+			</c:if>
+		</form>
+	</div>
 
 			
 			

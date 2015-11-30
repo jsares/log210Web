@@ -51,23 +51,8 @@ public class CreerCompteEtudiant extends HttpServlet {
 
 		if(verifierMdpIdentique()){
 			if(validerChampsVide()){
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				java.sql.Connection con;
-				try {
-
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
-					Statement st= (Statement) con.createStatement(); 
-					int rs=st.executeUpdate("INSERT INTO etudiants (email, password) VALUES ('"+this.courriel+"', '"+this.mdp+"')"); 
-
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
+				new DAOCompte().creerCompteEtudiant(this.courriel, this.mdp); 
+				
 				this.getServletContext().getRequestDispatcher("/ConfirmerCreationCompte.jsp").forward(request, response);
 			}
 			else{

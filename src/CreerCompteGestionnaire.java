@@ -55,23 +55,9 @@ public class CreerCompteGestionnaire extends HttpServlet {
 		
 		if(verifierMdpIdentique()){
 			if(validerChampsVide()){
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				java.sql.Connection con;
-				try {
-					
-					con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
-					Statement st= (Statement) con.createStatement(); 
-					int rs=st.executeUpdate("INSERT INTO gestionnaire (email, password, nom, prenom, adresse, telephone) VALUES ('"+this.courriel+"','"+this.mdp+"','"+this.nom+"','"+this.prenom+"','"+this.adresse+"', '"+this.telephone+"')"); 
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
+				
+				new DAOCompte().creerCompteGestionnaire(courriel, mdp, nom, prenom, adresse, telephone);
+				
 				this.getServletContext().getRequestDispatcher("/ConfirmerCreationCompte.jsp").forward(request, response);
 			}else
 				this.getServletContext().getRequestDispatcher("/CreerCompteGestionnaire.jsp").forward(request, response);

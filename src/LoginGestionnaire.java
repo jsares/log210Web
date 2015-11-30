@@ -53,28 +53,20 @@ public class LoginGestionnaire extends HttpServlet {
 		setCourriel(request.getParameter("courriel"));
 		setMdp(mdp =request.getParameter("mdp"));
 		setTelephone(request.getParameter("telephone"));
+		Map<String, String> messages = new HashMap<String, String>();
 
 		if (request.getParameter("bmail") != null){
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection con;
-			ResultSet rs;
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
-			Map<String, String> messages = new HashMap<String, String>();
-			Statement st= (Statement) con.createStatement(); 
-			rs = st.executeQuery("select password from gestionnaire where email = '" + courriel + "'");
-			
-			if (rs.next()) { //connection reussi
-				if (rs.getString("password").equals(mdp)) {
+		int login = new DAOCompte().loginGestionnaireEmail(courriel, mdp);
+			if (login == 0) { //connection reussi
 					session.setAttribute("loginGestionnaire", courriel);
 					rd = request.getRequestDispatcher("AcceuilGestionnaire.jsp");
 				}
-				else { //mdp ou courriel ne correspondent pas
+			else if (login == -1){ //mdp ou courriel ne correspondent pas
 					request.setAttribute("messages", messages); // Now it's available by ${messages}
 					messages.put("erreurLogin", "Le courriel ou le mot de passe ne correspond pas");         
 					rd = request.getRequestDispatcher("loginGestionnaire.jsp");
 				}
-			}
+			
 			else { //mdp ou courriel ne correspondent pas
 				request.setAttribute("messages", messages); // Now it's available by ${messages}
 				messages.put("erreurLogin", "Nous éprouvons actuellement des difficultés");         
@@ -82,27 +74,16 @@ public class LoginGestionnaire extends HttpServlet {
 			}
 
 			rd.forward(request, response);
-		} catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		}
+	}
+	
 		
 		if (request.getParameter("btel") != null){
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection con;
-				ResultSet rs;
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LibrairieLog210","root","toor");
-				Map<String, String> messages = new HashMap<String, String>();
-				Statement st= (Statement) con.createStatement(); 
-				rs = st.executeQuery("select * from gestionnaire where telephone = '" + telephone + "'");
-				
-				
-				
-				if (rs.next()) { //connection reussi
-					if (rs.getString("password").equals(mdp)) {
-						setCourriel(rs.getString("email"));						
+			int login = new DAOCompte().loginGestionnaireTel(telephone, mdp);
+				if (login == 0) { //connection reussi
+						setCourriel(new DAOCompte().getEmail(telephone));	
+						if(courriel == null){
+							System.out.println("SETTING EMAIL FROM TELEPHONE FAILED, CHECK GETEMAIL METHOD");
+						}
 						session.setAttribute("loginGestionnaire", courriel);
 						rd = request.getRequestDispatcher("AcceuilGestionnaire.jsp");
 					}
@@ -119,13 +100,10 @@ public class LoginGestionnaire extends HttpServlet {
 				}
 
 				rd.forward(request, response);
-			} catch (SQLException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+			
 			}
 
-	}
+	
 	
 	  public String getCourriel() {
 			return courriel;

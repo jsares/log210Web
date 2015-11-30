@@ -51,23 +51,15 @@ public class LoginEtudiant extends HttpServlet {
 
 		setCourriel(request.getParameter("courriel"));
 		setMdp(request.getParameter("mdp"));
+		Map<String, String> messages = new HashMap<String, String>();
 
 		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection con;
-			ResultSet rs;
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
-			Map<String, String> messages = new HashMap<String, String>();
-			Statement st= (Statement) con.createStatement(); 
-			rs = st.executeQuery("select password from etudiants where email = '" + courriel + "'");
-			
-			if (rs.next()) { //connection reussi
-				if (rs.getString("password").equals(mdp)) {
+		int login = new DAOCompte().loginEtudiant(courriel, mdp);
+			if (login == 0) { //connection reussi
 					session.setAttribute("loginEtudiant", courriel);
 					rd = request.getRequestDispatcher("Accueil.jsp");
 				}
-				else { //mdp ou courriel ne correspondent pas
+			else if (login == -1) {  { //mdp ou courriel ne correspondent pas
 					request.setAttribute("messages", messages); // Now it's available by ${messages}
 					messages.put("erreurLogin", "Le courriel ou le mot de passe ne correspond pas");         
 					rd = request.getRequestDispatcher("loginEtudiant.jsp");
@@ -80,10 +72,7 @@ public class LoginEtudiant extends HttpServlet {
 			}
 
 			rd.forward(request, response);
-		} catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		
 
 	}
 

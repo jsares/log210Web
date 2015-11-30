@@ -83,15 +83,8 @@ public class ChercherLivre extends HttpServlet {
 
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
-		try {
-
-			java.sql.Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
+			java.sql.Connection con = DerbyUtils.getConnection();
 			Statement st= (Statement) con.createStatement(); 
 			ResultSet rs;
 			if(typeEntree == "Titre"){
