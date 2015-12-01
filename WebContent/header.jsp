@@ -39,11 +39,16 @@
        		<a class="navbar-brand text-danger" href="Accueil.jsp">LABORATOIRE LOG210</a>
     		
         </div>
-        
+     
           <ul class="nav navbar-nav navbar-right">
+      
+
             <li><a href="ChercherLivre.jsp">Chercher un livre</a></li>
             <li><a href="LivreReserves.jsp">Livres Réservés</a></li>
               <li class="active"><a href="/log210Web/Logout">Se déconnecter </a></li>
+    
+ 
+
         </diviv><!--/.nav-collapse -->
       </div>
     </nav>
@@ -51,6 +56,8 @@
             
             
             </ul>
+            
+            		</form>
         </div>
     </div>
 </nav>
