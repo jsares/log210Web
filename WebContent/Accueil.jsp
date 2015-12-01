@@ -22,9 +22,10 @@
 		<a href="ChercherLivre.jsp"> <input type="button"
 			value="Chercher un livre" name="Submit" id="frm_submit" />
 			
-			<a href="LivreReserves.jsp"> <input type="button"
-			value="Voir livres reservés" name="Submit" id="frm_submit" />
-				
+<form class="form-signin" action="/log210Web/AfficherLivresReserves" method=post>
+			<button class="btn btn-lg btn-primary btn-block" type="submit"><h4>Voir livres reserves</h4></button>
+</form>
+
 		<c:if test="${sessionScope.loginEtudiant != null}">
 			<a href="AjouterLivre.jsp"> <input type="button"
 			value="Ajouter un livre" name="Submit" id="frm_submit" /></a>

@@ -166,9 +166,10 @@ public class ChercherLivre extends HttpServlet {
 		upc = (rs.getString(3) ); 
 		titre = (rs.getString(4) ); 
 		auteur = (rs.getString(5) ); 
-		prix = (rs.getString(6) ); 
-		etat = (rs.getString(7));
+		prix = (rs.getString(7) ); 
+		etat = (rs.getString(6));
 		ean = (rs.getString(8) ); 
+		System.out.println("prix = "+prix);
 	}
 
 	private void preparerInfo(HttpServletRequest request) {

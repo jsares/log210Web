@@ -1,4 +1,5 @@
 
+
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -17,18 +18,22 @@ import com.mysql.jdbc.Statement;
 /**
  * Servlet implementation class CreerCompteeEtudiant
  */
-@WebServlet("/LiberationLivre")
-public class LiberationLivre extends HttpServlet {
+@WebServlet("/AfficherLivresReserves")
+public class AfficherLivresReserves extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String id ="";
-	private String email = "";
-	private ArrayList<String[]> ListePayes = null;
+	private String prix = "";
+	private String titre = "";
+	private String auteur = "";
+	private ArrayList<String[]> myListPaye = null;
+	private ArrayList<String[]> myListReserve = null;
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 
 
-	public LiberationLivre() {
+	public AfficherLivresReserves() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -44,22 +49,42 @@ public class LiberationLivre extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
+	
+			
+				myListReserve = new DAOReservations().listeReserved((String)session.getAttribute("etudiant"));
+				
+							     
+			/////ListPayé
+			
+				myListPaye = new DAOReservations().listePayed((String)session.getAttribute("etudiant"));  
+				
+				prix = new DAOReservations().getPrixReserved((String)session.getAttribute("etudiant"));
+					
 		
-            email = request.getParameter("emailE");
-            System.out.println("EMAIL RECONNU =" + email);
-            session.setAttribute("etudiant", email);
-           
-			ListePayes = new DAOReservations().listePayed(email);
-				
-				
-				
+			request.setAttribute("myListReserve", myListReserve);
+			request.setAttribute("myListPaye", myListPaye);
+			request.setAttribute("prix", prix);
+		
+			request.getRequestDispatcher("/LivreReserves.jsp").forward(request, response);
+        } 
+		
+	
+			
+			
 
 			
-            request.setAttribute("ListePayes", ListePayes);
-			request.getRequestDispatcher("/LivreALiberer.jsp").forward(request, response);
-        }
-}
-		
-		
 			
+		}
+		
+	
+	
+	
+	
+	
+	
+
+	
+
+
+
