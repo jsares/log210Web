@@ -29,6 +29,11 @@
 			<a href="AjouterLivre.jsp"> <input type="button"
 			value="Ajouter un livre" name="Submit" id="frm_submit" /></a>
 		</c:if>
+		
+		<c:if test="${sessionScope.loginGestionnaire != null}">
+			<a href="ReceptionLivre.jsp"> <input type="button"
+			value="Réception d'un livre" name="Submit" id="frm_submit" /></a>
+		</c:if>
 			
 	</c:if>
 
