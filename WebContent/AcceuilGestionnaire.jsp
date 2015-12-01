@@ -16,6 +16,10 @@
 		<button class="btn btn-lg btn-primary btn-block" type="submit"><h4>Se
 			déconnecter</h4></button>
 	</c:if>
+	<div>
+      <a href="Accueil.jsp"> <input type="button"
+			value="Retourner sur la page d'accueil" name="Submit" id="frm_submit" />
+      </div>
 </form>
 
 

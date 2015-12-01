@@ -5,6 +5,7 @@
 
 <div class="container">
       <form class="form-signin" action="/log210Web/LoginGestionnaire" method=post>
+      
       	<div class="form-group">
         	<h3 class="form-signin-heading">Se connecter en tant que gestionnaire</h3>
         </div>
@@ -24,6 +25,10 @@
         <button class="btn btn-lg btn-primary btn-block" name="bmail" type="submit">Se connecter via email</button>
          <button class="btn btn-lg btn-primary btn-block" name="btel"  type="submit">Se connecter via telephone</button>
       </form>
+      <div>
+      <a href="Accueil.jsp"> <input type="button"
+			value="Retourner sur la page d'accueil" name="Submit" id="frm_submit" />
+      </div>
 
 </div> <!-- /container -->
 

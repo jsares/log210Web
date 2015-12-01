@@ -13,15 +13,19 @@
 	<c:if test="${sessionScope.loginGestionnaire != null || sessionScope.loginEtudiant != null}">
 		<c:if test="${sessionScope.loginGestionnaire != null}">
 			<label> Vous devez être connecté en tant qu'étudiant pour pouvoir accéder à cette page.
-			</label>
-			
-			<a href="Accueil.jsp"> <input type="button"
-			value="Retourner sur la page d'accueil" name="Submit" id="frm_submit" />
-		
+			</label>		
 		</c:if>
+		<div>
+		<a href="Accueil.jsp"> <input type="button"
+			value="Retourner sur la page d'accueil" name="Submit" id="frm_submit" ></a>
+		</div>
 		<c:if test="${sessionScope.loginEtudiant != null}">
 			<label> Vous êtes connecté en tant que <%=session.getAttribute("loginEtudiant")%>
 			</label>
+			
+			<div>
+			<h3>Ajouter un livre</h3>
+			</div>
 			<form class="form-signin" action="/log210Web/ChercherLivre" method=post>
 				<fieldset>
 					<div class="row">
