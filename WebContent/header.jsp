@@ -41,11 +41,15 @@
         </div>
      
           <ul class="nav navbar-nav navbar-right">
-      
+      <c:if test="${ sessionScope.loginGestionnaire != null || sessionScope.loginEtudiant != null}"> 
 
             <li><a href="ChercherLivre.jsp">Chercher un livre</a></li>
             <li><a href="LivreReserves.jsp">Livres Réservés</a></li>
-              <li class="active"><a href="/log210Web/Logout">Se déconnecter </a></li>
+            
+            <form id="myForm" class="navbar-brand text-danger" action="/log210Web/Logout" method="post">  
+            <!--  form class="form-signin" action="/log210Web/Logout" method=post>
+              <!-- li class="active"><a href="/log210Web/Logout">Se déconnecter </a></li -->
+                <li onclick="myForm.submit();">Se déconnecter</li>
     
  
 
@@ -53,8 +57,9 @@
       </div>
     </nav>
             
-            
-            
+              </c:if> 
+
+              
             </ul>
             
             		</form>
@@ -63,14 +68,17 @@
 </nav>
 
 
-
-
-
+<!-- POCHEEE -->
+<!-- >form class="form-signin" action="/log210Web/Logout" method=post>
+<!-- c:if test="${ sessionScope.loginGestionnaire != null || sessionScope.loginEtudiant != null}"> -->
+ <!-- button class="btn btn-lg btn-danger btn-block" type="submit"><h4>Se
+			déconnecter</h4></button >
+ <!-- /c:if> >
+</form -->
 
 
     <!-- Les boutons à ajouter -->
-
-<form class="form-signin" action="/log210Web/Logout" method=post>
+<!--  form class="form-signin" action="/log210Web/Logout" method=post>
 	<c:if test="${sessionScope.loginGestionnaire != null || sessionScope.loginEtudiant != null}">
 	
 		<a href="ChercherLivre.jsp"> <input type="button"
@@ -83,8 +91,9 @@
 		 <li class="btn btn-lg btn-primary btn-block" type="submit"><h4>Se
 			déconnecter</h4></li>
 	</c:if>
-	</form>
+	</form-->
 	
+
 
    
    

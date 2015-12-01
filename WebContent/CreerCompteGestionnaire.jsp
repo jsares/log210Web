@@ -4,7 +4,7 @@
 	<div class="container">
       <form class="form-signin" action="/log210Web/CreerCompteGestionnaire" method=post>
       	<div class="form-group">
-        	<h3 class="form-signin-heading">Créer un compte gestionnaire</h3>
+        	<h3 class="bg-danger">Créer un compte gestionnaire</h3>
         </div>
         <legend>Infos personnelles</legend>
         <div class="form-group">
@@ -39,7 +39,7 @@
         
         
         
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Créer votre compte</button>
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Créer votre compte</button>
       </form>
 
 </div> <!-- /container -->
