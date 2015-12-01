@@ -168,6 +168,7 @@ public class ChercherLivreReceptionLivre extends HttpServlet {
 		request.setAttribute("titre", titre);
 		request.setAttribute("auteur", auteur);
 		request.setAttribute("prix", prix);
+		request.setAttribute("etat", etat);
 		request.setAttribute("id", id);
 		request.setAttribute("isbn", this.isbn);
 		request.setAttribute("upc", this.upc);

@@ -13,7 +13,5 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/taglibs-standard-jstlel-1.2.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Salim/Desktop/eclipse/servlet-api-2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Salim/Desktop/eclipse/javax.servlet-3.0.0.v201112011016-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

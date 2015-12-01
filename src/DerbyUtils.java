@@ -62,7 +62,7 @@ public class DerbyUtils {
 
 	public static void CreateDBConnection() {
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librairieLog210","root","toor");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/librairieLog210","admin","admin");
 			System.out.println("Connected to database " + "LibrairieLog210");
 		} catch (Throwable e) {
 			/*
