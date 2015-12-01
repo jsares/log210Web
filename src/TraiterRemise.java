@@ -1,4 +1,5 @@
 
+
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -17,18 +18,14 @@ import com.mysql.jdbc.Statement;
 /**
  * Servlet implementation class CreerCompteeEtudiant
  */
-@WebServlet("/LiberationLivre")
-public class LiberationLivre extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private String id ="";
-	private String email = "";
-	private ArrayList<String[]> ListePayes = null;
+@WebServlet("/TraiterRemise")
+public class TraiterRemise extends HttpServlet {	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 
 
-	public LiberationLivre() {
+	public TraiterRemise() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -44,22 +41,20 @@ public class LiberationLivre extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			HttpSession session = request.getSession();
-		
-            email = request.getParameter("emailE");
-            System.out.println("EMAIL RECONNU =" + email);
-            session.setAttribute("etudiant", email);
-           
-			ListePayes = new DAOReservations().listePayed(email);
-				
-				
-				
-
-			
-            request.setAttribute("ListePayes", ListePayes);
-			request.getRequestDispatcher("/LivreALiberer.jsp").forward(request, response);
-        }
+		HttpSession session = request.getSession();
+		new DAOReservations().libererLivres((String)session.getAttribute("etudiant"));
+		request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
+	}
 }
 		
-		
-			
+	
+	
+	
+	
+	
+	
+
+	
+
+
+

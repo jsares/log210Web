@@ -24,8 +24,9 @@ public class ReserverLivre extends HttpServlet {
 	private String id ="";
 	private String prix = "";
 	private String titre = "";
+	private String utilisateur = "";
 	private String auteur = "";
-	private ArrayList<String> myListPaye = null;
+	private ArrayList<String[]> myListPaye = null;
 	private ArrayList<String[]> myListReserve = null;
 	
 	/**
@@ -56,98 +57,23 @@ public class ReserverLivre extends HttpServlet {
 		if (request.getParameter("Reserver") != null) {
             id = (String) (request.getSession().getAttribute("id"));
             prix =  (String) (request.getSession().getAttribute("prix"));
-            System.out.println(id + prix);
+            utilisateur = (String) (request.getSession().getAttribute("loginEtudiant"));
+            System.out.println(id +""+ prix);
                        
-            java.sql.Connection con;
-			try {
-				
-				con = DerbyUtils.getConnection();
-				Statement st= (Statement) con.createStatement(); 
-				int rs=st.executeUpdate("INSERT INTO reservation (etudiant, id, prix, payed) VALUES ('"+(session.getAttribute("utilisateur"))+"', '"+(this.id)+"', '"+(this.prix)+"','"+(0)+"')"); 
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+            //reservation du livre
+			new DAOReservations().reserverLivre(utilisateur, id, prix);
+			
 			/////ListeReserve
-			try {
-				
-				con = DerbyUtils.getConnection();
-				Statement st= (Statement) con.createStatement(); 
-				int prixInt = 0;
-				ResultSet rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
 			
-				myListReserve = new ArrayList<String[]>();  
+				myListReserve = new DAOReservations().listeReserved(utilisateur);
 				
-				while(rs.next()){
-					
-		        	if(Integer.parseInt(rs.getString(1))==0){
-						String id= (rs.getString(2) ); 
-						
-						try {
-							Statement st1= (Statement) con.createStatement(); 
-							ResultSet rqs;
-							rqs=st1.executeQuery("Select * from livres where id='"+id+"'"); 
-							
-							if(rqs.next()){
-								myListReserve.add(new String[] {rqs.getString(4), rqs.getString(5), rqs.getString(7)});
-							}
-							
-							prixInt = prixInt + Integer.parseInt(rqs.getString(7));
-						
-						
-						}
-						catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} 
-					
-		        	
-		        
-		        	}}
-				prix = (""+prixInt+"");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+							     
 			/////ListPayé
-			try {
-				
-				con = DerbyUtils.getConnection();
-				Statement st= (Statement) con.createStatement(); 
-				ResultSet rs=st.executeQuery("Select * from reservation where etudiant='"+session.getAttribute("utilisateur")+"'"); 
 			
-				myListPaye = new ArrayList<String>();  
+				myListPaye = new DAOReservations().listePayed(utilisateur);  
 				
-				while(rs.next()){
+				prix = new DAOReservations().getPrixReserved(utilisateur);
 					
-		        	if(Integer.parseInt(rs.getString(1))==1){
-						String id= (rs.getString(2) ); 
-						
-						try {
-							Statement st1= (Statement) con.createStatement(); 
-							ResultSet rqs;
-							rqs=st1.executeQuery("Select * from livres where id='"+id+"'"); 
-							
-							if(rqs.next()){
-								myListPaye.add(rqs.getString(4));
-							}
-							
-						
-						
-						}
-						catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} 
-					
-		        	
-		        
-		        	}}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
 		
 			request.setAttribute("myListReserve", myListReserve);
 			request.setAttribute("myListPaye", myListPaye);

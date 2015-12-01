@@ -16,30 +16,35 @@
 			<br>  <br /> 
 			<h4>			
 			
-			
-			<form class="form-signin" action="/log210Web/RetournerLivre" method=post>
+		
 			<c:forEach items="${ListePayes}" var="livreP">  
 			<br> Titre : ${livreP[0]} <br /> 
  			 Auteur : ${livreP[1]}  <br /> 
- 			 Etat : TODO <br /> 
+ 			 Etat : ${livreP[3]} <br /> 
  			 
  				
  			 
- 			<button class="btn btn-lg btn-primary btn-block" name="LivreID" value="${livreP[2]}" type="submit"><h4>Rembourser le livre</h4></button>
+ 			
             <BR>
  			<br>  <br />  
  			<br>  <br />  
  			
-			</c:forEach>  		
-			</form>
+			</c:forEach>  
 			</h4>
-			<h3>Veuillez présenter ces livres à l'élève et annoter tous les livres acceptés</h3>
+			<h3>Veuillez présenter ces livres à l'élève pour qu'il vérifie leur état</h3>
+			
 			
 				
 			
 		<div>
-		<form class="form-signin" >
-				<a href="Merci.jsp"> <button type="button" class="btn btn-lg btn-primary btn-block" ><h4>Liberer ces livres</h4></button>
+		<form class="form-signin" action="/log210Web/TraiterRemise" method=post>
+				 <input type="submit" name="Liberer" value="Liberer les livres">
+		</a>
+		</form>
+		</div>
+		<div>
+		<form class="form-signin" action="/log210Web/RetournerLivre" method=post>
+				 <input type="submit" name="Retourner" value="Rembourser un livre">
 		</a>
 		</form>
 	</div>

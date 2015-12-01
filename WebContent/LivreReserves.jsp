@@ -34,7 +34,7 @@
 			<h4>
 			
 			<c:forEach items="${myListPaye}" var="livreP">  
- 			<br>  ${livreP} <br />  
+ 			<br>  ${livreP[0]} <br />  
 			</c:forEach>  
 				
 			</h4>

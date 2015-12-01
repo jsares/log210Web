@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.Statement;
 
@@ -18,9 +19,9 @@ import com.mysql.jdbc.Statement;
  */
 @WebServlet("/RetournerLivre")
 public class RetournerLivre extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private String id = "";
-	private String ListePayes = null;
+	
+	private ArrayList<String[]> myListPaye = null;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,10 +41,10 @@ public class RetournerLivre extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ListePayes = (String) request.getParameter("LivreID");
-		System.out.println(ListePayes);
-
+		HttpSession session = request.getSession();
+		myListPaye = new DAOReservations().listePayed((String)session.getAttribute("etudiant"));  
+		request.setAttribute("myListPaye", myListPaye);
+		request.getRequestDispatcher("/ChoixRetourLivre.jsp").forward(request, response);
 	}
 
 
